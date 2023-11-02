@@ -1,0 +1,994 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo1.png' %}">
+
+    <title>TCPL</title>
+    <!-- This is how to include a static file -->
+    <link rel="stylesheet" href="{% static 'css/mystyle.css' type='text/css' %}" />
+    <!-- <link rel="stylesheet" href="{% static 'libs/jquery.jsjquery-ui-1.12.1/jquery-ui.css' %}"> -->
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="{% static 'libs/leaflet/leaflet.css' %}" />
+    <!-- BOOTSTRAP only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- ZoomBar & slider-->
+    <link rel="stylesheet" href="{% static 'libs/L.Control.ZoomBar-master/src/L.Control.ZoomBar.css' %}" />
+    <link rel="stylesheet" href="{% static 'libs/Leaflet.zoomslider-master/src/L.Control.Zoomslider.css' %}" />
+    <!-- MousePosition -->
+    <link rel="stylesheet" href="{% static 'libs/Leaflet.MousePosition-master/src/L.Control.MousePosition.css ' %}" />
+    <!-- line-measure -->
+    <link rel="stylesheet" href="{% static 'libs/polyline-measure/line-measure.css' %}" />
+    
+    <link rel="stylesheet" href="{% static 'libs/leaflet-measure-master/leaflet-measure.css' %}" />
+    <!-- <link rel="stylesheet" href="{% static 'libs/leaflet_measure/leaflet.measure.css' %}" /> -->
+    
+    <!-- draw -->
+    <link rel="stylesheet" href="{% static 'libs/leaflet-draw-control/leaflet-draw-control.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css" />
+    <!-- legend -->
+    <link rel="stylesheet" href="{% static 'libs/leaflet-wms-legend/leaflet.wmslegend.css' %}" />
+   
+    <!-- fontawsome -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <!-- Add SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+<!-- print -->
+<!-- <link href="
+    https://cdn.jsdelivr.net/npm/leaflet-easyprint@2.1.9/libs/leaflet.min.css
+    " rel="stylesheet"> -->
+
+    <!-- Add your other JavaScript code -->
+<style>
+    .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #f2f2f2;
+        text-align: center;
+        padding: 20px;
+        z-index: 1;
+        overflow-y: auto; /* Add vertical scrollbar if needed */
+        max-height: 30vh; /* Set a maximum height for the footer */
+    }
+    
+    .minimize-button {
+        position: absolute;
+        top: 20px;
+        right: 10px;
+        cursor: pointer;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 2px 6px;
+        font-size: 18px;
+        z-index: 2;
+    }
+    
+    .navbar {
+        z-index: 3; /* Ensure navbar is above footer */
+    }
+    
+    .table th,
+    .table td {
+        border-right: 1px solid #ccc;
+        padding: 8px;
+    }
+    
+    .table th:last-child,
+    .table td:last-child {
+        border-right: none;
+    }
+
+/* for arrow buttons */
+ 
+
+/* ======= for PMC_Missing_Link_Buffer layer ====== */
+.cl1 {
+    position: absolute;
+    
+    top: 0;
+    right: 0;
+  }
+
+
+/* ======= for missinglink layer ====== */
+.cl2 {
+    position: absolute;
+    
+    top: 0;
+    right: 0;
+  }
+
+/* ============ PMCroads =============== */
+
+  .cl3 {
+    position: absolute;
+    
+    top: 0;
+    right: 0;
+  } 
+
+
+  .cl4 {
+    position: absolute;
+    
+    top: 0;
+    right: 0;
+  } 
+/* ============ select by attributes =============== */
+
+.attr {
+    position: absolute;
+    
+    top: 0;
+    right: 0;
+  } 
+
+/* ============ arrow button =============== */
+.button-container {
+    position: relative;
+}
+
+.arrowbuttons {
+    display: none;
+    
+    border-radius: 15px;
+    top: 100%;
+    left: 0;
+    padding: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.lr{
+    border-radius: 5px;
+    padding: 2px;
+}
+
+</style>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-...">
+
+
+</head>
+
+<body style="overflow-y: hidden; color: #f8f9fa;" class="fluid-container">
+
+
+<!-- ========== code by anup===================== -->
+
+<!-- ============ for locations ================== -->
+
+<footer class="footer">
+    <!-- Add this table to your HTML -->
+    <table id="data-table" class="table" style="display: none;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Ward Name</th>
+                <th>Road Width</th>
+                <th>Ward_Name_left</th>
+                <th>Road_Buffer</th>
+                <th>BUFF_DIST</th>
+                <th>ORIG_FID</th>
+                <th>Shape_Length</th>
+                <th>Shape_Area</th>
+                <th>index_right</th>
+                <th>id_right</th>
+                <th>name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be displayed here -->
+        </tbody>
+    </table>
+    <button id="minimize-button" class="minimize-button" style="display: none;">-</button>
+</footer>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var table = document.getElementById("data-table");
+        var minimizeButton = document.getElementById("minimize-button");
+        var loadButton = document.getElementById("loadqueryLocation");
+    
+        // Initial table state: hidden
+        var tableVisible = false;
+    
+        minimizeButton.style.display = "none"; // Initially hide the minimize button
+    
+        minimizeButton.addEventListener("click", function () {
+            if (tableVisible) {
+                // Minimize the table
+                table.style.display = "none";
+                tableVisible = false;
+                minimizeButton.textContent = "+"; // Change button text to maximize
+            } else {
+                // Maximize the table
+                table.style.display = "table";
+                tableVisible = true;
+                minimizeButton.textContent = "-"; // Change button text to minimize
+            }
+        });
+    
+        loadButton.addEventListener("click", function () {
+            // Show the table
+            table.style.display = "table";
+            minimizeButton.style.display = "block"; // Show the minimize button
+        });
+    });
+    
+    var mapContainer = document.getElementById("map");
+    mapContainer.style.height = "58vh";
+    mapContainer.style.top = "30px";
+    
+</script>
+
+<!-- =============  for attributes ================= -->
+<footer class="footer" id="attr1">
+    <div class="attr">
+        <button id="crossbutton" onclick="attr()" >X</button>
+    </div>
+
+    <table id="other-data-table" class="table" style="display:none;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Length_m</th>
+                    <th>Missing_Existing</th>
+                    <th>Name</th>
+                    <th>Road_width</th>
+                    <th>Shape_Length</th>
+                    <th>wardnum</th>
+                    <!-- <th>object_id</th> -->
+
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be displayed here -->
+            </tbody>
+    </table>
+
+</footer>
+
+
+<script>
+    function attr() {
+        var container = document.getElementById("attr1");
+        container.style.display = "none";  
+    }
+
+    
+</script>
+
+
+
+<!-- ============= for PMC_Missing_Link layer ======================= -->
+
+<footer class="footer" id="container1" style="display: none;">
+    <div class="cl1">
+        <button id="PMC_Missing_Link_BufferhideTableButton" onclick="hideTable1()">X</button>
+    </div>
+    <table id="PMC_Missing_Link_Buffer" class="table">  
+        <tr>
+            {% for key in properties.0.keys %} <!-- Assuming properties is not empty -->
+                <th oncontextmenu="processColumn1(event, '{{ key }}'); return false;">{{ key }}</th>
+            {% endfor %}
+        </tr>
+        {% for property in properties %}
+            <tr>
+                {% for value in property.values %}
+                    <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</footer>
+
+<script>
+    function hideTable1() {
+        var container = document.getElementById("container1");
+        container.style.display = "none";
+    }
+
+    function toggleTable() {
+        var container = document.getElementById("container1");
+        container.style.display = "block";
+    }
+
+    function processColumn1(event, columnName) {
+        event.preventDefault();
+
+        var table = document.getElementById("PMC_Missing_Link_Buffer");
+        var columnIndex;
+        var total = 0;
+        var rowCount = 0;
+
+        // Find the index of the column
+        for (var i = 0; i < table.rows[0].cells.length; i++) {
+            if (table.rows[0].cells[i].textContent === columnName) {
+                columnIndex = i;
+                break;
+            }
+        }
+
+        // Process the column values
+        var numericRegex = /^-?\d*(\.\d+)?$/;
+
+        for (var i = 1; i < table.rows.length; i++) {
+            var cell = table.rows[i].cells[columnIndex];
+            var value = cell.textContent.trim();
+
+            if (numericRegex.test(value) && value !== "") {
+                total += parseFloat(value);
+            } else if (value !== "") {
+                rowCount++;
+            }
+        }
+
+        if (!isNaN(total) && rowCount === 0) {
+            alert("Sum of numeric values in column '" + columnName + "': " + total);
+        } else if (rowCount > 0) {
+            alert("Total count of character/string values in column '" + columnName + "': " + rowCount);
+        }
+
+        return false;
+    }
+</script>
+
+
+<!-- ============= for missinglink layer ======================= -->
+
+<footer class="footer" id="container2" style="display: none;">
+    <div class="cl2">
+        <button id="missinglinkhideTableButton" onclick="hideTable2()">X</button>
+    </div>
+    <table id="missinglink" class="table">
+        <tr>
+            {% for key in missinglink.0.keys %} <!-- Assuming properties is not empty -->
+            <th oncontextmenu="processColumn2(event, '{{ key }}'); return false;">{{ key }}</th>
+            {% endfor %}
+        </tr>
+        {% for property in missinglink %}
+            <tr>
+                {% for value in property.values %}
+                    <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</footer>
+
+
+<script>
+    function hideTable2() {
+        var container = document.getElementById("container2");
+        container.style.display = "none";
+    }
+
+    function toggleTable2() {
+        var container = document.getElementById("container2");
+        container.style.display = "block";
+    }
+
+    function processColumn2(event, columnName) {
+        event.preventDefault();
+
+        var table = document.getElementById("missinglink");
+        var columnIndex;
+        var total = 0;
+        var rowCount = 0;
+
+        // Find the index of the column
+        for (var i = 0; i < table.rows[0].cells.length; i++) {
+            if (table.rows[0].cells[i].textContent === columnName) {
+                columnIndex = i;
+                break;
+            }
+        }
+
+        // Process the column values
+        var numericRegex = /^-?\d*(\.\d+)?$/;
+
+
+        for (var i = 1; i < table.rows.length; i++) {
+            var cell = table.rows[i].cells[columnIndex];
+            var value = cell.textContent.trim();
+
+            if (numericRegex.test(value) && value !== "") {
+                total += parseFloat(value);
+            } else if (value !== "") {
+                rowCount++;
+            }
+        }
+
+        if (!isNaN(total) && rowCount === 0) {
+            alert("Sum of numeric values in column '" + columnName + "': " + total);
+        } else if (rowCount > 0) {
+            alert("Total count of character/string values in column '" + columnName + "': " + rowCount);
+        }
+
+        return false;
+    }
+</script>
+
+
+
+
+
+<!-- =============== PMCroads===================== -->
+
+<footer class="footer" id="container3" style="display: none;">
+    <div class="cl3">
+        <button id="PMCroadshideTableButton" onclick="hideTable3()">X</button>
+    </div>
+    <table id="PMCroads" class="table">
+        <tr>
+            {% for key in PMCroads.0.keys %}
+                <th oncontextmenu="processColumn(event, '{{ key }}'); return false;">{{ key }}</th>
+            {% endfor %}
+        </tr>
+        {% for property in PMCroads %}
+            <tr>
+                {% for value in property.values %}
+                    <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</footer>
+
+<script>
+    function hideTable3() {
+        var container = document.getElementById("container3");
+        container.style.display = "none";
+    }
+
+    function toggleTable3() {
+        var container = document.getElementById("container3");
+        container.style.display = "block";
+    }
+
+    function processColumn(event, columnName) {
+        event.preventDefault();
+
+        var table = document.getElementById("PMCroads");
+        var columnIndex;
+        var total = 0;
+        var rowCount = 0;
+
+        // Find the index of the column
+        for (var i = 0; i < table.rows[0].cells.length; i++) {
+            if (table.rows[0].cells[i].textContent === columnName) {
+                columnIndex = i;
+                break;
+            }
+        }
+
+        // Process the column values
+        var numericRegex = /^-?\d*(\.\d+)?$/;
+
+
+        for (var i = 1; i < table.rows.length; i++) {
+            var cell = table.rows[i].cells[columnIndex];
+            var value = cell.textContent.trim();
+
+            if (numericRegex.test(value) && value !== "") {
+                total += parseFloat(value);
+            } else if (value !== "") {
+                rowCount++;
+            }
+        }
+
+        if (!isNaN(total) && rowCount === 0) {
+            alert("Sum of numeric values in column '" + columnName + "': " + total);
+        } else if (rowCount > 0) {
+            alert("Total count of character/string values in column '" + columnName + "': " + rowCount);
+        }
+
+        return false;
+    }
+</script>
+
+
+
+
+<!-- =============== DP_Roads===================== -->
+
+
+<footer class="footer" id="container4" style="display: none;">
+    <div class="cl4">
+        <button id="DP_RoadshideTableButton" onclick="hideTable4()">X</button>
+    </div>
+    <table id="DP_Roads" class="table">
+        <tr>
+            {% for key in DP_Roads.0.keys %} <!-- Assuming properties is not empty -->
+                <th oncontextmenu="processColumn4(event, '{{ key }}'); return false;">{{ key }}</th>
+            {% endfor %}
+        </tr>
+        {% for property in DP_Roads %}
+            <tr>
+                {% for value in property.values %}
+                    <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</footer>
+
+<script>
+    function hideTable4() {
+        var container = document.getElementById("container4");
+        container.style.display = "none";
+    }
+
+    function toggleTable() {
+        var container = document.getElementById("container4");
+        container.style.display = "block";
+    }
+
+    function processColumn4(event, columnName) {
+        event.preventDefault();
+
+        var table = document.getElementById("DP_Roads");
+        var columnIndex;
+        var total = 0;
+        var rowCount = 0;
+
+        // Find the index of the column
+        for (var i = 0; i < table.rows[0].cells.length; i++) {
+            if (table.rows[0].cells[i].textContent === columnName) {
+                columnIndex = i;
+                break;
+            }
+        }
+
+        // Process the column values
+        var numericRegex = /^-?\d*(\.\d+)?$/;
+
+        for (var i = 1; i < table.rows.length; i++) {
+            var cell = table.rows[i].cells[columnIndex];
+            var value = cell.textContent.trim();
+
+            if (numericRegex.test(value) && value !== "") {
+                total += parseFloat(value);
+            } else if (value !== "") {
+                rowCount++;
+            }
+        }
+
+        if (!isNaN(total) && rowCount === 0) {
+            alert("Sum of numeric values in column '" + columnName + "': " + total);
+        } else if (rowCount > 0) {
+            alert("Total count of character/string values in column '" + columnName + "': " + rowCount);
+        }
+
+        return false;
+    }
+</script>
+
+
+
+
+
+
+
+<!-- ==================================== -->
+
+        <section id="navbar-wrapper" >
+
+            <nav class="navbar navbar-expand-custom navbar-mainbg px-5">
+                <a class="text-decoration-none fw-bold" href="{% url 'ward' %}">
+                    <h5 class="p-2 text-left fw-bold" style="color: #004aad;"> <img class="imglogo" src="{% static 'images/logo1.png' %}"
+                            alt="image not found" style="width: 50px; height: 50px;"> TCPLGeo
+                    </h5>
+
+                </a>
+               
+                <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
+                    <ul class="navbar-nav ms-auto px-5">
+            
+                        <li class="nav-item dropdown px-5" style="font-size: 15px; ">
+                            <h3 class="nav-link profile-username text-center fw-bold text-uppercase circle-avatar"
+                                style="font-size: 17px; " id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ user.username }}
+                            </h3>
+                        
+                            <ul class="dropdown-menu dropdown-menu-right me-5 px-2" aria-labelledby="navbarDropdown" style="position: absolute; left: 401.663px; top: 65.9793px;">
+
+                            
+                        
+                                
+                                <li class="nav-item fs-3" style="color: #004aad;">
+                                    <p class="nav-link tcplBlue"  class="fw-bold p-1 px-2"
+                                        style="border: 0; font-size: 15px; border-radius: 10px;" type="submit">
+                                        <i class="fas fa-user-circle"></i>
+                                        <span class="tcplBlue">{{ user.username }}</span>
+                                        <br>
+                                        <i class="far fa-envelope text-dark" style="font-size: 10;"></i><span class="text-dark" style="font-size: 10px; font-weight: bold;">{{ user.email }}</span>
+                                    
+                                
+                                    <a class="nav-link text-success" href="{% url 'user_details' %}" class="fw-bold"
+                                        style="border: 0; font-size: 13px; border-radius: 10px;" name="user_Details" type="submit">
+                            
+                                        <span class="tcplBlue">More Info</span><i class="fas fa-arrow-right px-2"></i>
+                                    </a>
+                                    </p>
+                                </li>
+                                
+                                <li class="fs-2">
+                                    <button id="saveBtn" class="dropdown-item"
+                                        style="font-size:13px; font-weight: bold; color:#004aad;" type="button"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fal fa-plus-circle"></i>Create Bookmark 
+                                    </button>
+                                
+
+                                    <table id="locationTable" >
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                <hr>
+                            </li>
+
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}" class="text-danger fw-bold p-1 px-2"
+                                style="border: 0; font-size: 15px; border-radius: 10px;" name="Logout" type="submit">
+                                <i class="fas fa-sign-out-alt text-danger"></i>
+                                <span class="text-danger">logout</span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+
+                    </ul>
+                </li>
+                    </ul>
+
+                 <!-- </div> -->
+            </nav>
+
+        </section>
+
+
+
+   
+
+        <section id="content-wrapper" >
+            <div id="dropdown-container"></div>
+            <div id="map" class="leaflet-container"></div>
+        
+
+        <!-- /////////////////////////select by attribute/////////////////// -->
+        <div id="boxattribute" class="" style="padding-left: 220px;">     
+            <button id="button">Select by Attributes</button>
+            <!-- <button id="button" class="d-sm-none d-block "><img src="{% static 'images/selectByAttribute.png' %}" style="height: 40px; width: 40px;"></button> -->
+
+            <form action="" id="form" class="p-2">
+                <div id="filter-tag">
+                    <table>
+                        <tr>
+                            <td><label for="layer"  style="font-size: 12px; padding: 2px;  font-weight: bold;">Select Layer</label></td>
+                            <td><select class="form-control" id="layer" name="layer" style="font-size: 10px;">
+                                    <option value="">Select Layer</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="attributes" style="font-size: 12px; padding: 2px; font-weight: bold;">Select Attributes </label>
+                            </td>
+                            <td>
+                                <select class="form-control" id="attributes" name="attributes" style="font-size: 10px;">
+                                    <option value="" >Select Ward</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="operator" style="font-size: 12px; padding: 2px; font-weight: bold;">Select Operator</label>
+                            </td>
+                            <td>
+                                <select class="form-control" id="operator" name="operator" style="font-size: 10px;">
+                                    <option value="">Select Operator</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="value"  style="font-size: 12px; padding: 2px; font-weight: bold;">Select Road</label>
+                            </td>
+                            <td>
+                                <select class="form-control" id="selectvalue" name="selectvalue" style="font-size: 10px;">
+                                    <option value="">select Road</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <!-- <tr>
+                            
+                            <button class="btn btn-success"
+                            id="loadquery" type="button"
+                            onclick="LoadQuery()">Load Query</button>
+                        </tr> -->
+                        <tr>
+                            <p class="text-dark" id="textval" style="font-size: 10px;">
+                            </p>
+                        </tr>
+                    </table>
+                </div>
+            </form> 
+        </div> 
+
+    <!-- /////////////////////////select by Location/////////////////// -->
+        <div id="boxLocation" class="pt-2 ps-5">     
+            <button id="btnLocation" >Select by Location</button>
+            <!-- <button id="btnLocation" class="d-sm-none d-block "><img src="{% static 'images/selectByLocation.png' %}" style="height: 40px; width: 40px;"></button> -->
+
+        <form action="" id="form1">
+            <div id="filter-tag1">
+                <table>
+                    <tr>
+                        <td><label for="sourceLayer"  style="font-size: 12px; padding: 2px;  font-weight: bold;">Source Layer</label></td>
+                        <td><select class="form-control" id="sourceLayer" name="sourceLayer" style="font-size: 10px;">
+                                <option value="">Source Layer</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="targetLayer" style="font-size: 12px; padding: 2px; font-weight: bold;">Target Layer </label>
+                        </td>
+                        <td>
+                            <select class="form-control" id="targetLayer" name="targetLayer" style="font-size: 10px;">
+                                <option value="" >Target Layer</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <!-- <tr>
+                        <td>
+                            <label for="sourceAttributes" style="font-size: 12px; padding: 2px; font-weight: bold;">Select Attributes </label>
+                        </td>
+                        <td>
+                            <select class="form-control" id="sourceAttributes" name="sourceAttributes" style="font-size: 10px;">
+                                <option value="" >Select Source Attribute</option>
+                            </select>
+                        </td>
+                    </tr>  -->
+                    <tr>
+                        <td>
+                            <label for="selectType"  style="font-size: 12px; padding: 2px; font-weight: bold;">Select Type</label>
+                        </td>
+                        <td>
+                            <select class="form-control" id="selectType" name="selectType" style="font-size: 10px;">
+                                <option value="">select Type</option>
+                                <option value="Intersection">Intersection</option>
+                                <!-- <option value="Intersection2">Intersection2</option> -->
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        
+                        <button class="btn btn-success"
+                        id="loadqueryLocation" type="button">Load Query</button>
+                    </tr>
+                    <tr>
+                        <p id="textval">
+                        </p>
+                    </tr>
+                </table>
+            </div>
+        </form> 
+    </div> 
+    <!-- <button class="btn-success" id="btnData1" type="button" onclick="ClearMe()" style="padding-left: 270px;">Clear</button> -->
+    
+    <div class="button-group" id="buttonGroup">
+        <button class="drwbtn" onclick="exportToKML()"><i class="fas fa-download"></i> <br><span style="font-size: 12px;">KML</span></button>
+    
+        <button class="drwbtn" onclick="enableLine()"><i class="fas fa-arrows-alt-h"></i></button>
+        <button class="drwbtn" onclick="enablePolygon()"><i class="fas fa-draw-polygon"></i></button>
+        <button class="drwbtn" onclick="enableCircle()"><i class="far fa-circle"></i></button>
+
+
+        <button class="drwbtn" onclick="clearMap()"><i class="fas fa-trash-alt"></i></button>
+
+        <!-- ======= layers data=========== -->
+
+        <span class="button-container">
+            <button class="drwbtn" id="layersBtn"><i class="fa-solid fa-square-caret-right"></i></button>
+        
+            <span class="arrowbuttons" id="buttons" style="display: none;">
+                <!-- Your buttons go here -->
+                <button class="lr"  onclick="toggleTable('container4')">DP_Roads</button>
+
+                <button  class="lr"  onclick="toggleTable('container3')">PMCroads</button>
+
+
+                <button class="lr" onclick="toggleTable('container2')">Missing Links</button>
+
+                <button class="lr"  onclick="toggleTable('container1')">PMC_Missing_Link</button>
+        
+               
+        
+               
+        
+               
+        
+            </span>
+        </span>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var layersBtn = document.getElementById('layersBtn');
+                var buttonsDiv = document.getElementById('buttons');
+        
+                layersBtn.addEventListener('click', function() {
+                    if (buttonsDiv.style.display === 'none' || buttonsDiv.style.display === '') {
+                        buttonsDiv.style.display = 'block';
+                    } else {
+                        buttonsDiv.style.display = 'none';
+                    }
+                });
+            });
+        
+            function toggleTable(tableId) {
+                var containers = document.querySelectorAll('.footer');
+                containers.forEach(function(container) {
+                    container.style.display = 'none';
+                });
+        
+                var container = document.getElementById(tableId);
+                container.style.display = 'block';
+            }
+        </script>
+        
+
+        <!-- ======= end layers data=========== -->
+
+
+        
+        
+        
+        
+        </section>
+
+
+
+    
+
+
+    <!-- JavaScript to dynamically position the dropdown -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    document.querySelector('.profile-username').addEventListener('click', function() {
+                        var dropdownMenu = document.querySelector('.dropdown-menu');
+                        var container = document.getElementById('dropdown-container');
+                        
+                        container.appendChild(dropdownMenu);
+                        dropdownMenu.classList.add('show');
+                        
+                        var rect = this.getBoundingClientRect();
+                        dropdownMenu.style.position = 'absolute';
+                        dropdownMenu.style.left = (rect.left + rect.width / 2) + 'px';
+                        dropdownMenu.style.top = (rect.bottom + window.pageYOffset) + 'px';
+                    });
+                });
+            </script>
+
+
+            <script>
+                // Get the element with the user's full username
+                var usernameElement = document.getElementById("navbarDropdown");
+            
+                // Get the user's full username from the element's content
+                var fullUsername = usernameElement.textContent.trim();
+            
+                // Split the full username into words based on space
+                var usernameWords = fullUsername.split(" ");
+            
+                // Initialize a variable to store the initials
+                var initials = "";
+            
+                // Loop through each word in the username and extract the first letter as an initial
+                for (var i = 0; i < usernameWords.length; i++) {
+                initials += usernameWords[i].charAt(0);
+                }
+            
+                // Set the content of the element to the initials
+                usernameElement.textContent = initials;
+            </script>
+
+            <!-- Turf.js -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.5.0/turf.min.js"></script>
+
+            <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/0.0.124/turf.js"></script> -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+            <!--html2pdf-->
+            <script src="{% static 'js/jspdf.umd.min.js' %}"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.16/jspdf.plugin.autotable.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+            <!-- jquery -->
+            <script>
+                var logoimage = "{% static 'images/logo1.png' %}"; // Replace with the actual URL of your image
+                var imageUrl = "{% static 'images/legend1.png' %}"; // Replace with the actual URL of your image
+            </script>
+
+            <!-- jquery -->
+            <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+                integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+            <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+            <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+
+            <!--leaflet-->
+            <script src="{% static 'libs/leaflet/leaflet.js' %}"></script>
+            <!--Bootstrap-->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+                crossorigin="anonymous"></script>
+            <!--Zoombar-->
+            <script src="{% static 'libs/L.Control.ZoomBar-master/src/L.Control.ZoomBar.js' %}"></script>
+            <script src="{% static 'libs/Leaflet.zoomslider-master/src/L.Control.Zoomslider.js' %}"></script>
+            <!--Mouse-position-->
+            <script src="{% static 'libs/Leaflet.MousePosition-master/src/L.Control.MousePosition.js' %}"></script>
+            <!--line measurement-->
+            <script src="{% static 'libs/polyline-measure/line-measure.js' %}"></script>
+            <!--meausrent-->
+            <script src="{% static 'libs/leaflet-measure-master/leaflet-measure.js' %}"></script>
+            
+            <!-- <script src="{% static 'libs/leaflet_measure/leaflet.measure.js' %}"></script> -->
+
+            <script src="{% static 'libs/feat.js' %}"></script>
+            <!--draw-control-->
+            <script src="{% static 'libs/leaflet-draw-control/leaflet-draw-control.js' %}"></script>
+            <!--legend-->
+            <script src="{% static 'libs/leaflet-wms-legend/leaflet.wmslegend.js' %}"></script>
+            <!--html2pdf-->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+                integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <!--leaflet-image-->
+            <script src="{% static 'libs/leaflet-image.js' %}"></script>
+            <!--Leaflet Omnivore KML plugin -->
+            <script src="https://unpkg.com/leaflet-omnivore/leaflet-omnivore.min.js"></script>
+            <!--sweetalert-->
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+            <!-- print -->
+            <script src="https://cdn.jsdelivr.net/npm/leaflet.browser.print@2.0.2/dist/leaflet.browser.print.min.js"></script>
+            <script src="
+            https://cdn.jsdelivr.net/npm/leaflet-easyprint@2.1.9/dist/bundle.min.js
+            "></script>
+            
+            <script>
+                // Define a global JavaScript variable to hold the static image URL
+                var northImageUrl = "{% static 'images/North.png' %}";
+            </script>
+            <script src="{% static 'js/wardmap.js' %}"></script>
+            <script src="{% static 'js/wardjson.js' %}"></script>
+
+</body>
+
+</html>
+
+
+

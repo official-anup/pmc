@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <title>Page with Arrow</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .arrow-container {
+            position: relative;
+        }
+        
+        .arrow {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            padding-top: 50px;
+            transform: translateY(-50%);
+            font-size: 34px;
+            cursor: pointer;
+        }
+        
+        .arrowbuttons {
+            display: none; /* Initially hide the buttons */
+            position: absolute;
+            top: calc(50% + 50px); /* Adjust the top position as needed */
+            left: 10px; /* Adjust the left position as needed */
+        }
+        
+        .arrowbuttons button {
+            display: block;
+            margin-bottom: 10px; /* Adjust the margin as needed */
+        }
+        
+        .arrow.active + .arrowbuttons {
+            display: block; /* Show the buttons when arrow is clicked */
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="arrow-container">
+        <div class="arrow" onclick="toggleButtons()">▶</div>
+        <div class="arrowbuttons" id="buttons">
+            <!-- Your buttons go here -->
+            <button>Button 1</button>
+            <button>Button 2</button>
+            <button>Button 3</button>
+            <button>Button 4</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleButtons() {
+            var buttons = document.getElementById("buttons");
+            buttons.style.display = (buttons.style.display === "none") ? "block" : "none";
+        }
+    </script>
+</body>
+</html>

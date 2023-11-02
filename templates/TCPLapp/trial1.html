@@ -1,0 +1,77 @@
+HTML structure 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select by Location Tool</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <div id="map" style="height: 500px;"></div>
+    <button id="withinButton">Within</button>
+    <button id="intersectButton">Intersect</button>
+    <button id="containsButton">Contains</button>
+    <div id="result"></div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/0.0.124/turf.min.js"></script>
+    <!-- <script src="script.js"></script> -->
+
+    <script>
+        
+
+// Java script code
+var map = L.map("map", {}).setView([18.55, 73.85], 10, L.CRS.EPSG4326);
+// var map = L.map('map').setView([latitude, longitude], zoomLevel);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+// Load GeoJSON layers for source and target
+var sourceLayer = L.geoJSON(sourceGeoJSONData).addTo(map);
+var targetLayer = L.geoJSON(targetGeoJSONData).addTo(map);
+
+// Event listeners for spatial relationship buttons
+document.getElementById('withinButton').addEventListener('click', function () {
+    selectFeatures("within");
+});
+
+document.getElementById('intersectButton').addEventListener('click', function () {
+    selectFeatures("intersect");
+});
+
+document.getElementById('containsButton').addEventListener('click', function () {
+    selectFeatures("contains");
+});
+
+function selectFeatures(spatialRelation) {
+    // Clear previous selections
+    sourceLayer.eachLayer(function (layer) {
+        sourceLayer.resetStyle(layer);
+    });
+
+    // Iterate through source features
+    sourceLayer.eachLayer(function (sourceFeature) {
+        // Check spatial relationship and style features accordingly
+        var selected = false;
+        targetLayer.eachLayer(function (targetFeature) {
+            if (spatialRelation === "within" && turf.booleanWithin(sourceFeature.toGeoJSON(), targetFeature.toGeoJSON())) {
+                selected = true;
+            } else if (spatialRelation === "intersect" && turf.booleanOverlap(sourceFeature.toGeoJSON(), targetFeature.toGeoJSON())) {
+                selected = true;
+            } else if (spatialRelation === "contains" && turf.booleanContains(targetFeature.toGeoJSON(), sourceFeature.toGeoJSON())) {
+                selected = true;
+            }
+        });
+        
+        if (selected) {
+            sourceLayer.setStyle({
+                color: 'red', // Change the style to indicate selection
+            });
+        }
+    });
+
+    // Update the result container
+    document.getElementById('result').innerHTML = `Selected features using "${spatialRelation}": ${sourceLayer.getLayers().length}`;
+}
+    </script>
+</body>
+</html>
+

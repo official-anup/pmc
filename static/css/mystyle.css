@@ -1,0 +1,416 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+
+body {
+  width: 100%;
+    background-color:#f8f9fa;
+  }
+ 
+
+
+
+  .popup-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto;
+}
+
+.popup-table th, .popup-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.popup-table th {
+    background-color: #f2f2f2;
+}
+
+.popup-table tbody {
+    display: block;
+    max-height: 200px;
+    overflow-y: auto;
+}.popup-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto;
+}
+
+.popup-table th, .popup-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.popup-table th {
+    background-color: #f2f2f2;
+}
+
+.popup-table tbody {
+    display: block;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+  
+  .btn {
+    padding: 2px ;
+    /* border: 2px solid #fff; */
+    /* color: #eaf0fb; */
+  }
+  .btn:hover{
+    background-color: #bbb;
+    color: black;
+  }
+    .prompt-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+  /* ********************************MAP******************************* */
+  #map {
+    position: absolute;
+    margin-left: 0;
+    top:13%;
+    left: 0%;
+    width: 100%;
+    height:94%;
+
+    z-index: 0;
+  
+  }
+
+
+
+  a {
+    transition: background 0.2s, color 0.2s;
+  }
+  
+  a:hover,
+  a:focus {
+    text-decoration: none;
+  }
+
+
+
+  /* ward */
+
+
+  #locationTable{
+    height: 50px; 
+    overflow-y: auto;
+    font-size:12px;
+  }
+  
+.button-group { position: absolute; top:25%; left: 10px; z-index: 1000;  }
+.button-group button { margin-bottom: 5px; display: block;  }
+
+
+.drwbtn {
+padding-top: 2px;
+background-color: white;
+border: 2px solid #bbb; /* Add gray border */
+border-radius: 5px;
+display: flex;
+justify-content: center;
+align-items: center; /* Center the icon vertically */
+}
+.drwbtn i {
+font-size: 15px; 
+padding-left:7px;
+/* padding-right: -5px; */
+}
+
+.circle-avatar {
+width: 50px; /* Set the width and height for the circle */
+height: 50px;
+background-color:transparent; 
+color: green;
+border: 2px solid green;
+border-radius: 50%; /* Makes it a circle */
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.circle-avatar:hover {
+
+color: #004aad;
+border:2px solid #004aad;
+
+}
+.dropdown-menu {
+    position:absolute;
+top: 100%;
+left: 50%;
+padding: 20px;
+margin-top: 0.125rem;
+margin-right: -6.785rem;
+background-color:#f9f6f6;
+/* border: 5px double black; */
+}
+
+
+
+#btnData1{
+z-index: 10;
+position: absolute;
+}
+#boxLocation{
+
+z-index: 10;
+/* width: 50%; */
+font-size:15px;
+position: absolute;
+/* border:; */
+}
+    
+#boxattribute {
+
+z-index: 10;
+/* width: 50%; */
+font-size:15px;
+position: absolute;
+}
+
+#boxattribute #form, #boxLocation #form1 {
+background: #bbb;
+/* padding: 5px; */
+display: none;
+position: absolute;
+z-index: 70;
+/* top: 100%; */
+width:200px;
+}
+#btnLocation {
+  /* width: 50%; */
+  /* margin-top: 30%; */
+  height: 30px;
+  background: gray;
+  font-weight: bold;
+  border-radius: 4px;
+  color: #fff;
+  padding: 3px 10px;
+  /* border: 1px solid #006699; */
+  /* margin-top: 10px; */
+  margin-bottom: 15px;
+  cursor: pointer;
+  }
+#button {
+/* width: 50%; */
+margin-top: 5%;
+height: 30px;
+background: gray;
+font-weight: bold;
+border-radius: 4px;
+color: #fff;
+padding: 3px 10px;
+/* border: 1px solid #006699; */
+/* margin-top: 10px; */
+margin-bottom: 15px;
+cursor: pointer;
+}
+#loadquery, #loadqueryLocation{
+
+font-weight: bold;
+font-size: 10px;
+color: #fff;
+padding: 3px 10px;
+
+}
+
+input[type="submit"] {
+background: none;
+color: #fff;
+border: none;
+text-align: left;
+cursor: pointer;
+}
+
+/* .my_swal_title{
+    font-size: 12px;
+} */
+
+.swal2-title {
+    position: relative;
+    max-width: 100%;
+    margin: 0;
+    padding: 0.8em 1em 0;
+    color: #595959;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: none;
+    word-wrap: break-word;
+}
+.swal2-container.swal2-center>.swal2-popup {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+    justify-self: center;
+    width: auto;
+    height: auto;
+    color: black;
+}
+
+.swal2-styled.swal2-cancel {
+    border: 0;
+    border-radius: 0.25em;
+    background: initial;
+    background-color: #6e7d88;
+    color: #fff;
+    font-size: 12px;
+
+}
+
+.swal2-styled.swal2-confirm {
+    border: 0;
+    border-radius: 0.25em;
+    background: initial;
+    background-color: red;
+    color: #fff;
+    font-size: 12px;
+}
+.delete-button{
+    background-color: transparent;
+    text-align: center;
+    color: red;
+    padding: 5px;
+    padding-left: 10px;
+    border: none;
+    margin: 5px;
+}
+
+
+
+.swal2-icon.swal2-warning {
+    border-color: #facea8;
+    color: #f8bb86;
+    height: 50px;
+    width: 60px;
+}
+
+
+
+
+    @import url('https://fonts.googleapis.com/css?family=Roboto');
+
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    i {
+        margin-right: 10px;
+    }
+
+    /*----------bootstrap-navbar-css------------*/
+    .navbar-logo {
+        padding: 15px;
+        color: #fff;
+    }
+
+    .navbar-mainbg {
+        background-color: #eeeeee;
+        padding: 0px;
+    }
+
+    #navbarSupportedContent {
+        overflow: hidden;
+        position: relative;
+    }
+
+    #navbarSupportedContent ul {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #navbarSupportedContent ul li a i {
+        margin-right: 10px;
+    }
+
+    #navbarSupportedContent li {
+        list-style-type: none;
+        float: left;
+    }
+
+    #navbarSupportedContent ul li a {
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+        font-size: 15px;
+        display: block;
+        padding: 20px 20px;
+        transition-duration: 0.6s;
+        transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        position: relative;
+    }
+
+    #navbarSupportedContent>ul>li.active>a {
+        color: #004aad;
+        background-color: transparent;
+        transition: all 0.7s;
+    }
+
+    #navbarSupportedContent a:not(:only-child):after {
+        content: "\f105";
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        font-size: 14px;
+        font-family: "Font Awesome 5 Free";
+        display: inline-block;
+        padding-right: 3px;
+        vertical-align: middle;
+        font-weight: 900;
+        transition: 0.5s;
+    }
+
+    #navbarSupportedContent .active>a:not(:only-child):after {
+        transform: rotate(90deg);
+    }
+
+   
+
+    @media(min-width: 992px) {
+        .navbar-expand-custom {
+            -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+        }
+
+        .navbar-expand-custom .navbar-nav {
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .navbar-expand-custom .navbar-toggler {
+            display: none;
+        }
+
+        .navbar-expand-custom .navbar-collapse {
+            display: -ms-flexbox !important;
+            display: flex !important;
+            -ms-flex-preferred-size: auto;
+            flex-basis: auto;
+        }
+    }
+
+
+    @media (max-width: 991px) {
+        #navbarSupportedContent ul li a {
+            padding: 12px 30px;
+        }
+
+       
+    }
+
+
+
+    
