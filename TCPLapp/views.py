@@ -573,85 +573,84 @@ def trial(request):
     return render(request, 'TCPLapp/trial.html')
 
 
-def layers(request):
-    pmlb=PmcMissingLinkBuffer.objects.all()[:10]
-    print(pmlb)
-    return render(request, 'TCPLapp/ward.html',{"pmlb":pmlb})
+def ward(request):
+    
+    return render(request, 'TCPLapp/ward.html')
 
 
 # WARD_VIEWS
 
-@login_required(login_url="login")
-def ward_table(request):
-############### for PMC_Missing_Link_Buffer ###########
-    url1 = "http://localhost:8080/geoserver/zone/wfs"
-    params = {
-        "service": "WFS",
-        "version": "2.0.0",
-        "request": "GetFeature",
-        "typeName": "zone:PMC_Missing_Links",
-        "outputFormat": "application/json"
-    }
+# @login_required(login_url="login")
+# def ward_table(request):
+# ############### for PMC_Missing_Link_Buffer ###########
+#     url1 = "http://localhost:8080/geoserver/zone/wfs"
+#     params = {
+#         "service": "WFS",
+#         "version": "2.0.0",
+#         "request": "GetFeature",
+#         "typeName": "zone:PMC_Missing_Links",
+#         "outputFormat": "application/json"
+#     }
 
-    response = requests.get(url1, params=params)
+#     response = requests.get(url1, params=params)
 
-    if response.status_code == 200:
-        data1 = response.json()['features'][:10]  # Get the first 10 features
-        # print(data1)
-        PMC_Missing_Links = [feature['properties'] for feature in data1]
+#     if response.status_code == 200:
+#         data1 = response.json()['features'][:10]  # Get the first 10 features
+#         # print(data1)
+#         PMC_Missing_Links = [feature['properties'] for feature in data1]
         
         
-############### for PMC_Missing_Links ###########
-    url2 = "http://localhost:8080/geoserver/zone/wfs"
-    params = {
-        "service": "WFS",
-        "version": "2.0.0",
-        "request": "GetFeature",
-        "typeName": "zone:missinglink",
-        "outputFormat": "application/json"
-    }
+# ############### for PMC_Missing_Links ###########
+#     url2 = "http://localhost:8080/geoserver/zone/wfs"
+#     params = {
+#         "service": "WFS",
+#         "version": "2.0.0",
+#         "request": "GetFeature",
+#         "typeName": "zone:missinglink",
+#         "outputFormat": "application/json"
+#     }
 
-    response2 = requests.get(url2, params=params)
+#     response2 = requests.get(url2, params=params)
 
-    if response2.status_code == 200:
-        data2 = response2.json()['features'][:10]  # Get the first 10 features
-        # print(data2)
-        missinglink = [feature['properties'] for feature in data2]
+#     if response2.status_code == 200:
+#         data2 = response2.json()['features'][:10]  # Get the first 10 features
+#         # print(data2)
+#         missinglink = [feature['properties'] for feature in data2]
         
-################### PMCroads  ################################
-    url3 = "http://localhost:8080/geoserver/zone/wfs"
-    params = {
-        "service": "WFS",
-        "version": "2.0.0",
-        "request": "GetFeature",
-        "typeName": "zone:PMCroads",
-        "outputFormat": "application/json"
-    }
+# ################### PMCroads  ################################
+#     url3 = "http://localhost:8080/geoserver/zone/wfs"
+#     params = {
+#         "service": "WFS",
+#         "version": "2.0.0",
+#         "request": "GetFeature",
+#         "typeName": "zone:PMCroads",
+#         "outputFormat": "application/json"
+#     }
 
-    response3 = requests.get(url3, params=params)
+#     response3 = requests.get(url3, params=params)
 
-    if response3.status_code == 200:
-        data3 = response3.json()['features'][:10]  # Get the first 10 features
-        # print(data3)
-        PMCroads = [feature['properties'] for feature in data3]
+#     if response3.status_code == 200:
+#         data3 = response3.json()['features'][:10]  # Get the first 10 features
+#         # print(data3)
+#         PMCroads = [feature['properties'] for feature in data3]
         
         
-################### DP_Roads  ################################
-    url4 = "http://localhost:8080/geoserver/zone/wfs"
-    params = {
-        "service": "WFS",
-        "version": "2.0.0",
-        "request": "GetFeature",
-        "typeName": "zone:DP_Roads",
-        "outputFormat": "application/json"
-    }
+# ################### DP_Roads  ################################
+#     url4 = "http://localhost:8080/geoserver/zone/wfs"
+#     params = {
+#         "service": "WFS",
+#         "version": "2.0.0",
+#         "request": "GetFeature",
+#         "typeName": "zone:DP_Roads",
+#         "outputFormat": "application/json"
+#     }
 
-    response4 = requests.get(url4, params=params)
+#     response4 = requests.get(url4, params=params)
 
-    if response4.status_code == 200:
-        data4 = response4.json()['features'][:10]  # Get the first 10 features
-        # print(data4)
-        DP_Roads = [feature['properties'] for feature in data4]
-###################################################
-        return render(request, 'TCPLapp/ward.html', {'properties': PMC_Missing_Links,"missinglink":missinglink,"PMCroads":PMCroads,"DP_Roads":DP_Roads})
-    # return render(request, 'TCPLapp/ward.html')
+#     if response4.status_code == 200:
+#         data4 = response4.json()['features'][:10]  # Get the first 10 features
+#         # print(data4)
+#         DP_Roads = [feature['properties'] for feature in data4]
+# ###################################################
+#         return render(request, 'TCPLapp/ward.html', {'properties': PMC_Missing_Links,"missinglink":missinglink,"PMCroads":PMCroads,"DP_Roads":DP_Roads})
+#     # return render(request, 'TCPLapp/ward.html')

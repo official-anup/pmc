@@ -111,7 +111,9 @@ path('user_details/', user_details, name='user_details'),
 path('Queryform/', views.Queryform.as_view(),name="Queryform"),
 
 
-path('ward/', views.ward_table, name='ward'),
+# path('ward/', views.ward_table, name='ward'),
+path('ward/', views.ward, name='ward'),
+
 
 # path('ward/<str:user_role>/', views.ward_view, name='ward'),
 path('select_by_location/', views.select_by_location, name='select_by_location'),
