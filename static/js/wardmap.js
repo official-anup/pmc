@@ -78,9 +78,9 @@ var baseLayers = {
 };
 
 var wms_layer = L.tileLayer.wms(
-  "http://localhost:8080/geoserver/zone/wms",
+  "https://portal.geopulsea.com/geoserver/PMC/wms",
   {
-    layers: "zone:pune-admin-wards",
+    layers: "PMC:pune-admin-wards",
     format: "image/png",
     transparent: true,
     version: "1.1.0",
@@ -90,9 +90,9 @@ var wms_layer = L.tileLayer.wms(
 
 
 var wms_layer2 = L.tileLayer.wms(
-  "http://localhost:8080/geoserver/zone/wms",
+  "https://portal.geopulsea.com/geoserver/PMC/wms",
   {
-    layers: "zone:PMC_Missing_Link_Buffer",
+    layers: "PMC:PMC_Missing_Link_Buffer",
     format: "image/png",
     transparent: true,
     version: "1.1.0",
@@ -101,9 +101,9 @@ var wms_layer2 = L.tileLayer.wms(
 );
 
 var wms_layer3 = L.tileLayer.wms(
-  "http://localhost:8080/geoserver/zone/wms",
+  "https://portal.geopulsea.com/geoserver/PMC/wms",
   {
-    layers: "zone:PMC_Missing_Links",
+    layers: "PMC:PMC_Missing_Links",
     format: "image/png",
     transparent: true,
     version: "1.1.0",
@@ -112,9 +112,9 @@ var wms_layer3 = L.tileLayer.wms(
 );
 
 var wms_layer4 = L.tileLayer.wms(
-  "http://localhost:8080/geoserver/zone/wms",
+  "https://portal.geopulsea.com/geoserver/PMC/wms",
   {
-    layers: "zone:PMCroads",
+    layers: "PMC:PMCroads",
     format: "image/png",
     transparent: true,
     version: "1.1.0",
@@ -123,9 +123,9 @@ var wms_layer4 = L.tileLayer.wms(
 );
 
 var wms_layer7 = L.tileLayer.wms(
-  "http://localhost:8080/geoserver/zone/wms",
+  "https://portal.geopulsea.com/geoserver/PMC/wms",
   {
-    layers: "zone:DP_Roads_Buffer",
+    layers: "PMC:DP_Roads_Buffer",
     format: "image/png",
     transparent: true,
     version: "1.1.0",
@@ -134,9 +134,9 @@ var wms_layer7 = L.tileLayer.wms(
 );
 
 var wms_layer6 = L.tileLayer.wms(
-  "http://localhost:8080/geoserver/zone/wms",
+  "https://portal.geopulsea.com/geoserver/PMC/wms",
   {
-    layers: "zone:DP_Roads",
+    layers: "PMC:DP_Roads",
     format: "image/png",
     transparent: true,
     version: "1.1.0",
@@ -151,9 +151,9 @@ wms_layer.addTo(map)
 
 
 var wms_layer5 = L.tileLayer.wms(
-  "http://localhost:8080/geoserver/zone/wms",
+  "https://portal.geopulsea.com/geoserver/PMC/wms",
   {
-    layers: "zone:missinglink",
+    layers: "PMC:missinglink",
     format: "image/png",
     transparent: true,
     version: "1.1.0",
@@ -162,9 +162,9 @@ var wms_layer5 = L.tileLayer.wms(
 );
 
 var wms_layer1 = L.tileLayer.wms(
-  "http://localhost:8080/geoserver/zone/wms",
+  "https://portal.geopulsea.com/geoserver/PMC/wms",
   {
-    layers: "zone:DProamosaic",
+    layers: "PMC:DProamosaic",
     format: "image/png",
     transparent: true,
     version: "1.1.0",
@@ -263,7 +263,7 @@ north.onAdd = function (map) {
 north.addTo(map);
 
 (uri =
-  "http://localhost:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=topp:states"), {
+  "https://portal.geopulsea.com/geoserver/PMC/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=topp:states"), {
   // namedToggle: false,
 };
 L.wmsLegend(uri);
@@ -359,10 +359,10 @@ map.on("contextmenu", (e) => {
   let layer = 'zone:' + checkedValues;
   let style = 'zone:' + checkedValues;
   let urrr =
-    `http://localhost:8080/geoserver/zone/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&QUERY_LAYERS=${layer}&STYLES&LAYERS=${layer}&exceptions=application%2Fvnd.ogc.se_inimage&INFO_FORMAT=application/json&FEATURE_COUNT=50&X=${Math.round(e.containerPoint.x)}&Y=${Math.round(e.containerPoint.y)}&SRS=EPSG%3A4326&WIDTH=${size.x}&HEIGHT=${size.y}&BBOX=${bbox}`
+    `https://portal.geopulsea.com/geoserver/PMC/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&QUERY_LAYERS=${layer}&STYLES&LAYERS=${layer}&exceptions=application%2Fvnd.ogc.se_inimage&INFO_FORMAT=application/json&FEATURE_COUNT=50&X=${Math.round(e.containerPoint.x)}&Y=${Math.round(e.containerPoint.y)}&SRS=EPSG%3A4326&WIDTH=${size.x}&HEIGHT=${size.y}&BBOX=${bbox}`
 
 
-  // `http://localhost:8080/geoserver/zone/wms?service=WMS&version=1.1.0&request=GetMap&layers=zone%3AVillage_Boundary&bbox=73.31581115722656%2C18.128164291381836%2C74.46541595458984%2C18.988113403320312&width=768&height=574&srs=EPSG%3A4326&styles=&format=application/openlayers`
+  // `https://portal.geopulsea.com/geoserver/PMC/wms?service=WMS&version=1.1.0&request=GetMap&layers=zone%3AVillage_Boundary&bbox=73.31581115722656%2C18.128164291381836%2C74.46541595458984%2C18.988113403320312&width=768&height=574&srs=EPSG%3A4326&styles=&format=application/openlayers`
 
   // you can use this url for further processing such as fetching data from server or showing it on the map
 
@@ -624,7 +624,7 @@ $("#button").click(function () {
   $(document).ready(function () {
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/geoserver/zone/wfs?request=getCapabilities",
+      url: "https://portal.geopulsea.com/geoserver/PMC/wms?request=getCapabilities",
       dataType: "xml",
       success: function (xml) {
         var select1 = $('#layer');
@@ -654,7 +654,7 @@ $("#button").click(function () {
       $(document).ready(function () {
         $.ajax({
           type: "GET",
-          url: "http://localhost:8080/geoserver/wfs?service=WFS&request=DescribeFeatureType&version=1.1.0&typeName=" +
+          url: "https://portal.geopulsea.com/geoserver/PMC/wms?service=WFS&request=DescribeFeatureType&version=1.1.0&typeName=" +
             value_layer1,
           dataType: "xml",
 
@@ -733,7 +733,7 @@ $("#button").click(function () {
       $(document).ready(function () {
         $.ajax({
           type: "GET",
-          url: "http://localhost:8080/geoserver/wfs?service=wfs&version=1.0.0&request=getfeature&typename=" +
+          url: "https://portal.geopulsea.com/geoserver/PMC/wms?service=wfs&version=1.0.0&request=getfeature&typename=" +
             attributes + "&PROPERTYNAME=" + value_attribute,
           dataType: "xml",
           
@@ -790,7 +790,7 @@ $(function () {
     fitbou(sql_filter1, layer)
 
     var wms_layerf = L.tileLayer.wms(
-      "http://localhost:8080/geoserver/zone/wms", {
+      "https://portal.geopulsea.com/geoserver/PMC/wms", {
       layers: layer,
       format: "image/png",
       transparent: true,
@@ -808,7 +808,7 @@ $(function () {
     
     function fitbou(filter, layer1) {
       var urlm =
-        "http://localhost:8080/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" +
+        "https://portal.geopulsea.com/geoserver/PMC/wms?service=WFS&version=1.0.0&request=GetFeature&typeName=" +
         layer1 + "&CQL_FILTER=" + filter + "&outputFormat=application/json";
         // console.log("data",urlm)
       $.getJSON(urlm, function (data) {
@@ -904,7 +904,7 @@ $("#btnLocation").click(function () {
   $(document).ready(function () {
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/geoserver/zone/wfs?request=getCapabilities",
+      url: "https://portal.geopulsea.com/geoserver/PMC/wms?request=getCapabilities",
       dataType: "xml",
       success: function (xml) {
         var selectSource = $('#sourceLayer');
@@ -941,7 +941,7 @@ $(function () {
     // Perform an AJAX request to fetch attributes based on the selected sourceLayer
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/geoserver/wfs?service=WFS&request=DescribeFeatureType&version=1.1.0&typeName=" +
+      url: "https://portal.geopulsea.com/geoserver/PMC/wms?service=WFS&request=DescribeFeatureType&version=1.1.0&typeName=" +
         value_layer1,
       dataType: "xml",
       success: function (xml) {
