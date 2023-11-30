@@ -51,6 +51,25 @@ class Customer2(models.Model):
 
 
 
+class SearchHistory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    query = models.CharField(max_length=255)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.query}"
+
+
+class BookmarkedLocation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.name}"
+
+
 # class Registration(models.Model):
 #     fullname= models.CharField(max_length=80)
 #     username = models.CharField(max_length=80)

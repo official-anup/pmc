@@ -235,8 +235,9 @@ i {
 	}
 }
   </style>
-        </head>
-    <body style="overflow: hidden; color: #f8f9fa;">
+</head>
+
+<body style="overflow: hidden; color: #f8f9fa;">
 
        
 
@@ -251,23 +252,23 @@ i {
 
                     
                   </a>
-                  <!-- <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <i class="fas fa-bars text-dark"></i>
-                  </button> -->
+                  <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <i class="fas fa-bars text-white"></i>
+                  </button>
                   
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                       <ul class="navbar-nav ms-auto">
-                          {% comment %} <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
+                          <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
 
                           <div style='max-height: 350px;  overflow-y: scroll;'><select id="layerSelect">
                             <option value="layer1">Layer 1</option>
                             <option value="layer2">Layer 2</option>
                             <option value="layer3">Layer 3</option>
-                        </select> {% endcomment %}
+                        </select>
               
-              </div> 
+              </div>
                      
-                          <!-- {% comment %} <li class="nav-item" id="box">
+                          {% comment %} <li class="nav-item" id="box">
                             <a class="nav-link" id="button"><i class="far fa-clone"></i> Make Query 
                                   <form action="" id="form">
                                       <div id="filter-tag">
@@ -319,7 +320,7 @@ i {
                                               </tr>
                                               <tr>
                                                 
-                                                  <p>selected query</p> -->
+                                                  <!-- <p>selected query</p> -->
                                                   <p id="textval" style="font-size: 10px; color: black;"> </p>
                                                
                                               </tr>
@@ -327,19 +328,70 @@ i {
                                       </div>
                                   </form>
                            </a>
-                        </li> 
-                           
+                        </li> {% endcomment %}
+                          {% comment %} <li class="nav-item ">
+                              <a class="nav-link" href="javascript:void(0);"><i class="far fa-address-book"></i>Search By Coordinates</a>
+                          </li>
+                           {% endcomment %}
                           
-                          <!-- <li class="nav-item active">
-                              <a href="{% url  %}" class="nav-link"><i class="d-none d-sm-inline"></i>Upload File</a>
-                          </li> 
-                          <li class="nav-item">
+                          <li class="nav-item active">
+                              <a href="{% url 'before_payment' %}" class="nav-link"><i class="fas fa-file-import"></i>Upload File</a>
+                          </li>
+                            {% comment %} <li class="nav-item">
                                 <a class="nav-link" id="saveBtn" class="nav-link" > <i class="fal fa-plus-circle"></i> Create Bookmark</a>
                               
-                            </li>  -->
+                            </li> {% endcomment %}
                             <!--Show username those login -->
 
-                           <!-- {% comment %} <li>
+                          <li class="nav-item dropdown me-5 pe-5" style="font-size: 15px;">
+                            <h3 class="nav-link profile-username fw-bold text-capitalize" style="font-size: 15px; color: #004aad;" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              {{ user.username }}
+                            </h3>
+                  
+                            <ul class="dropdown-menu me-5" aria-labelledby="navbarDropdown" style="font-size: 13px; padding: 20px;">
+                              {% comment %} <li>
+                                <label for="" class="p-2">User-Email :</label>
+                                <p class=" px-2" style="color: #004aad;">{{ user.email }}</p>
+                              </li>
+                              <li> {% endcomment %}
+                              
+                              </li>
+                              <li>
+                                <hr class="dropdown-divider">
+                              </li>
+                                  <!--PDF -->
+                              <li class="nav-item me-5">
+                                <button onclick="downloadPDF('{{ user.username }}', '{{ user.email }}')" id="generatePdfButton" class="text-light border-0" style="background:#004aad;">
+                                  <i class="fas fa-download"> Export map as PDF</i>
+                              </li>
+                              <li>
+                                <hr class="dropdown-divider">
+                              </li>
+                                                           <!--Bookmark code -->
+                              <li>
+                                <button id="saveBtn" class="dropdown-item" style="font-size:12px; font-weight: bold; color:#004aad;" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Create Bookmark <i class="fal fa-plus-circle"></i>
+                                </button>
+                                         <!-- Show bookmark list--> 
+                              <table id="locationTable" style="overflow-y: auto;">
+                                <thead>
+                                  <tr>
+                                    <th>Name</th>
+                                   
+                                    <th>Action</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <!-- Table rows will be dynamically added here -->
+                                </tbody>
+                              </table>
+                              </li>
+
+                              
+                              <li>
+                                <hr class="dropdown-divider">
+                              </li>
+                              {% comment %} <li>
                                 <div class="text-danger">
                                   <a href="{% url 'logout' %}" class="text-danger fw-bold p-1 px-2" style="border: 0; font-size: 15px; border-radius: 10px;" name="Logout" type="submit">
                                     <i class="fas fa-sign-out-alt"></i>
@@ -347,91 +399,40 @@ i {
                                   </a>
                                 </div>
                               </li> {% endcomment %}
+
+
+
+                            
+
+
                             </ul>
                           </li>
                           {% comment %} end {% endcomment %}
-                         -->
-                        <div>
-                       
-                      <li class="nav-item dropdown me-5 pe-5" style="font-size: 15px;">
-                        <h3 class="nav-link profile-username fw-bold text-capitalize" style="font-size: 15px; color: #004aad;" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          {{ user.username }}
-                        </h3>
-              
-                        <ul class="dropdown-menu me-5" aria-labelledby="navbarDropdown" style="font-size: 13px; padding: 20px;">
-                          <!-- {% comment %} <li>
-                            <label for="" class="p-2">User-Email :</label>
-                            <p class=" px-2" style="color: #004aad;">{{ user.email }}</p>
-                          </li> {% endcomment %} -->
-                          <li>
-                          
-                          </li>
-                          <li>
-                            <hr class="dropdown-divider">
-                          </li>
-                              <!--PDF -->
-                          <li class="nav-item me-5">
-                            <button onclick="downloadPDF('{{ user.username }}', '{{ user.email }}')" id="generatePdfButton" class="text-light border-0" style="background:#004aad;">
-                              <i class="fas fa-download"> Export map as PDF</i>
-                          </li>
-                          <li>
-                            <hr class="dropdown-divider">
-                          </li>
-                                                       <!--Bookmark code -->
-                          <li class="fs-3">
-                            <button id="saveBtn" class="dropdown-item" style="font-size:12px; font-weight: bold; color:#004aad;" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Create Bookmark <i class="fal fa-plus-circle"></i>
-                            </button>
-                        </li>
-                        
-                                     <!-- Show bookmark list--> 
-                          <table id="locationTable" style="overflow-y: auto;">
-                            <thead>
-                              <tr>
-                                <th>Name</th>
-                               
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <!-- Table rows will be dynamically added here -->
-                            </tbody>
-                          </table><hr>
-                          </li>
 
-                          <li class="nav-item fs-3" style="color: #004aad;">
-                            <a class="nav-link" href="{% url 'user_details' %}" class="fw-bold p-1 px-2" style="border: 0; font-size: 15px; border-radius: 10px;" name="Logout" type="submit">
-                              <i class="fas fa-user-circle"></i>
-                              <span class="tcplBlue">user_Details</span>
-                          </a>
-                        </li>
-                      
-                        <li class="nav-item fs-3">
-                          <a class="nav-link" href="{% url 'before_payment' %}" class="fw-bold p-1 px-2" style="border: 0; font-size: 15px; border-radius: 10px;" name="Logout" type="submit">
-                            <i class="fas fa-file-upload text-success"></i>
-                            <span class=" text-success ">Upload File <H1></H1></span>
-                        </a>
-                      </li>
-                    
-                        <li class="nav-item">
-                          <a class="nav-link" href="{% url 'logout' %}" class="text-danger fw-bold p-1 px-2" style="border: 0; font-size: 15px; border-radius: 10px;" name="Logout" type="submit">
-                            <i class="fas fa-sign-out-alt text-danger"></i>
-                            <span class="text-danger">logout</span>
-                        </a>
-                      </li>
-                    </div>
-                   
                           {% comment %} <li class="nav-item">
+                            
+                            <a href="javascript:void(0);" class="nav-link profile-username fw-bold text-capitalize" style="font-size: 15px; color: #004aad;" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              {{ user.username }}
+                              </a>
+                        </li> {% endcomment %}
+                          <li class="nav-item">
                               <a class="nav-link" href="{% url 'logout' %}" class="text-danger fw-bold p-1 px-2" style="border: 0; font-size: 15px; border-radius: 10px;" name="Logout" type="submit">
                                 <i class="fas fa-sign-out-alt"></i>
                                 <span class="d-none d-sm-inline">logout</span>
                             </a>
-                          </li> {% endcomment %}
-
+                          </li>
                        
                       </ul>
 
-                      
+
+                     
+
+
+                      <li class="nav-item active">
+                        <a href="/user_details" class="nav-link"><i class="fas fa-file-import"></i>Profile</a>
+                    </li>
+
+
                   </div>
               </nav>
 
@@ -439,132 +440,26 @@ i {
             <section id="content-wrapper">
                 <div id="map" class="leaflet-container"></div>
           
-                <!-- <div id="main"> -->
-                   <!-- <div class="main_search">
+                <div id="main">
+                   <div class="main_search">
                     
 
                         <input type="text" placeholder="Search.." name="search2" class="search" id="search-input">
     
                         <button class="bg-light" id="btnData2" type="button" ><i class="far fa-search"></i></button>
 
-                       <button class="btn-success" id="btnData1" type="button" onclick="ClearMe()">Clear</button> 
+
+
+                    
     
+                         <button class="btn-success" id="btnData1" type="button" onclick="ClearMe()">Clear</button>
     
-                  </div> -->
+                        {% comment %} <button class="bg-light" id="btnData2" type="button" ><i class="far fa-search"></i></button> {% endcomment %}
 
-                  
-        
-
-            <div id="box1" class="ps-5 pt-2">
-              <button id="buttons">Select by Location</button>
-              <form action="" id="form">
-                  <div id="filter-tag1">
-                      <table>
-                          <tr>
-                              <td><label for="layer1"  style="font-size: 12px; padding: 2px;  font-weight: bold;">Source Layer</label></td>
-                              <td><select class="form-control" id="layer1" name="layer1" style="font-size: 10px;">
-                                      <option value="">Source Layer</option>
-                                  </select>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td>
-                                  <label for="layer2" style="font-size: 12px; padding: 2px; font-weight: bold;">Target Layer </label>
-                              </td>
-                              <td>
-                                  <select class="form-control" id="layer2" name="layer2" style="font-size: 10px;">
-                                      <option value="" >Target Layer</option>
-                                  </select>
-                              </td>
-                          </tr>
-                          
-                          <tr>
-                              <td>
-                                  <label for="type"  style="font-size: 12px; padding: 2px; font-weight: bold;">Select Type</label>
-                              </td>
-                              <td>
-                                  <select class="form-control" id="" name="selectvalue" style="font-size: 10px;">
-                                      <option >Select Type</option>
-                                      <!-- <option >within</option> -->
-                                      <option >Intersection</option>
-
-
-                                  </select>
-                              </td>
-                          </tr>
-                          <tr>
-                              
-                              <button class="btn btn-success"
-                              id="loadquery" type="button"
-                              onclick="LoadQuery()">Load Query</button>
-                          </tr>
-                          <tr>
-                              <p id="textval">
-                              </p>
-                          </tr>
-                      </table>
+                       
+    
                   </div>
-              </form>
-          </div>
-
-          <!-- /////////////////////////select by attribute/////////////////// -->
-          <div id="box" class="" style="padding-left: 220px;">        <!-- <button id="selectButton">Select by Location</button> -->
-              <button id="button">Select by Attributes</button>
-              <form action="" id="form">
-                  <div id="filter-tag">
-                      <table>
-                          <tr>
-                              <td><label for="layer"  style="font-size: 12px; padding: 2px;  font-weight: bold;">Select Layer</label></td>
-                              <td><select class="form-control" id="layer" name="layer" style="font-size: 10px;">
-                                      <option value="">Select Layer</option>
-                                  </select>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td>
-                                  <label for="attributes" style="font-size: 12px; padding: 2px; font-weight: bold;">Select Ward </label>
-                              </td>
-                              <td>
-                                  <select class="form-control" id="attributes" name="attributes" style="font-size: 10px;">
-                                      <option value="" >Select Ward</option>
-                                  </select>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td>
-                                  <label for="operator" style="font-size: 12px; padding: 2px; font-weight: bold;">Select Operator</label>
-                              </td>
-                              <td>
-                                  <select class="form-control" id="operator" name="operator" style="font-size: 10px;">
-                                      <option value="">Select Operator</option>
-                                  </select>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td>
-                                  <label for="value"  style="font-size: 12px; padding: 2px; font-weight: bold;">Select Road</label>
-                              </td>
-                              <td>
-                                  <select class="form-control" id="selectvalue" name="selectvalue" style="font-size: 10px;">
-                                      <option value="">select Road</option>
-                                  </select>
-                              </td>
-                          </tr>
-                          <!-- <tr>
-                              
-                              <button class="btn btn-success"
-                              id="loadquery" type="button"
-                              onclick="LoadQuery()">Load Query</button>
-                          </tr> -->
-                          <tr>
-                              <p id="textval">
-                              </p>
-                          </tr>
-                      </table>
-                  </div>
-              </form> 
-          </div>
-         <!-- </div> -->
+         </div>
             </section>
             
           
@@ -677,239 +572,239 @@ i {
 
           <script>
 // ---------Responsive-navbar-active-animation-----------
-// function test(){
-// 	var tabsNewAnim = $('#navbarSupportedContent');
-// 	var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
-// 	var activeItemNewAnim = tabsNewAnim.find('.active');
-// 	var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
-// 	var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
-// 	var itemPosNewAnimTop = activeItemNewAnim.position();
-// 	var itemPosNewAnimLeft = activeItemNewAnim.position();
-// 	$(".hori-selector").css({
-// 		"top":itemPosNewAnimTop.top + "px", 
-// 		"left":itemPosNewAnimLeft.left + "px",
-// 		"height": activeWidthNewAnimHeight + "px",
-// 		"width": activeWidthNewAnimWidth + "px"
-// 	});
-// 	$("#navbarSupportedContent").on("click","li",function(e){
-// 		$('#navbarSupportedContent ul li').removeClass("active");
-// 		$(this).addClass('active');
-// 		var activeWidthNewAnimHeight = $(this).innerHeight();
-// 		var activeWidthNewAnimWidth = $(this).innerWidth();
-// 		var itemPosNewAnimTop = $(this).position();
-// 		var itemPosNewAnimLeft = $(this).position();
-// 		$(".hori-selector").css({
-// 			"top":itemPosNewAnimTop.top + "px", 
-// 			"left":itemPosNewAnimLeft.left + "px",
-// 			"height": activeWidthNewAnimHeight + "px",
-// 			"width": activeWidthNewAnimWidth + "px"
-// 		});
-// 	});
-// }
-// $(document).ready(function(){
-// 	setTimeout(function(){ test(); });
-// });
-// $(window).on('resize', function(){
-// 	setTimeout(function(){ test(); }, 500);
-// });
-// $(".navbar-toggler").click(function(){
-// 	$(".navbar-collapse").slideToggle(300);
-// 	setTimeout(function(){ test(); });
-// });
+function test(){
+	var tabsNewAnim = $('#navbarSupportedContent');
+	var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+	var activeItemNewAnim = tabsNewAnim.find('.active');
+	var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+	var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+	var itemPosNewAnimTop = activeItemNewAnim.position();
+	var itemPosNewAnimLeft = activeItemNewAnim.position();
+	$(".hori-selector").css({
+		"top":itemPosNewAnimTop.top + "px", 
+		"left":itemPosNewAnimLeft.left + "px",
+		"height": activeWidthNewAnimHeight + "px",
+		"width": activeWidthNewAnimWidth + "px"
+	});
+	$("#navbarSupportedContent").on("click","li",function(e){
+		$('#navbarSupportedContent ul li').removeClass("active");
+		$(this).addClass('active');
+		var activeWidthNewAnimHeight = $(this).innerHeight();
+		var activeWidthNewAnimWidth = $(this).innerWidth();
+		var itemPosNewAnimTop = $(this).position();
+		var itemPosNewAnimLeft = $(this).position();
+		$(".hori-selector").css({
+			"top":itemPosNewAnimTop.top + "px", 
+			"left":itemPosNewAnimLeft.left + "px",
+			"height": activeWidthNewAnimHeight + "px",
+			"width": activeWidthNewAnimWidth + "px"
+		});
+	});
+}
+$(document).ready(function(){
+	setTimeout(function(){ test(); });
+});
+$(window).on('resize', function(){
+	setTimeout(function(){ test(); }, 500);
+});
+$(".navbar-toggler").click(function(){
+	$(".navbar-collapse").slideToggle(300);
+	setTimeout(function(){ test(); });
+});
 
 
 
     // ***************************************************************Make QUery***************************************************************
 
-  //   $("#button").click(function() {
-  //     $("#box form").toggle("slow");
-  //     $(document).ready(function() {
-  //         $.ajax({
-  //             type: "GET",
-  //             url: "https://portal.tcplgeo.com/geoservers/DP/wfs?request=getCapabilities",
-  //             dataType: "xml",
-  //             success: function(xml) {
-  //                 var select1 = $('#layer');
+    $("#button").click(function() {
+      $("#box form").toggle("slow");
+      $(document).ready(function() {
+          $.ajax({
+              type: "GET",
+              url: "https://portal.tcplgeo.com/geoservers/DP/wfs?request=getCapabilities",
+              dataType: "xml",
+              success: function(xml) {
+                  var select1 = $('#layer');
 
-  //                 $(xml).find('FeatureType').each(function() {
-  //                     $(this).find('Name').each(function() {
-  //                         var value = $(this).text();
-  //                         select1.append(
-  //                             "<option class='ddindent' value='" +
-  //                             value + "'>" + value + "</option>");
-  //                     });
-  //                 });
-  //             }
-  //         });
-  //     });
-  //     $(function() {
-  //         $("#layer").change(function() {
-  //             var attributes = document.getElementById("attributes");
-  //             var length = attributes.options.length;
-  //             for (i = length - 1; i >= 0; i--) {
-  //                 attributes.options[i] = null;
-  //             }
-  //             var value_layer1 = $(this).val();
-  //             $(document).ready(function() {
-  //                 $.ajax({
-  //                     type: "GET",
-  //                     url: "https://portal.tcplgeo.com/geoservers/wfs?service=WFS&request=DescribeFeatureType&version=1.1.0&typeName=" +
-  //                         value_layer1,
-  //                     dataType: "xml",
+                  $(xml).find('FeatureType').each(function() {
+                      $(this).find('Name').each(function() {
+                          var value = $(this).text();
+                          select1.append(
+                              "<option class='ddindent' value='" +
+                              value + "'>" + value + "</option>");
+                      });
+                  });
+              }
+          });
+      });
+      $(function() {
+          $("#layer").change(function() {
+              var attributes = document.getElementById("attributes");
+              var length = attributes.options.length;
+              for (i = length - 1; i >= 0; i--) {
+                  attributes.options[i] = null;
+              }
+              var value_layer1 = $(this).val();
+              $(document).ready(function() {
+                  $.ajax({
+                      type: "GET",
+                      url: "https://portal.tcplgeo.com/geoservers/wfs?service=WFS&request=DescribeFeatureType&version=1.1.0&typeName=" +
+                          value_layer1,
+                      dataType: "xml",
 
-  //                     success: function(xml) {
+                      success: function(xml) {
 
-  //                         var select2 = $('#attributes');
-  //                         $(xml).find('xsd\\:sequence').each(function() {
-  //                             $(this).find('xsd\\:element').each(
-  //                                 function() {
-  //                                     var value = $(this)
-  //                                         .attr('name');
-  //                                     var type = $(this).attr(
-  //                                         'type');
-  //                                     if (value != 'geom' &&
-  //                                         value != 'the_geom'
-  //                                     ) {
-  //                                         select2.append(
-  //                                             "<option class='ddindent' value='" +
-  //                                             type +
-  //                                             "'>" +
-  //                                             value +
-  //                                             "</option>");
-  //                                     }
-  //                                 });
-  //                         });
-  //                     }
-  //                 })
-  //             });
-  //             document.getElementById("textval").innerHTML = value_layer1;
-  //         })
-  //     });
-  //     $(function() {
-  //         $("#attributes").change(function() {
-  //             var operator = document.getElementById("operator");
-  //             var attributes = $("#layer option:selected").text();
-  //             var length = operator.options.length;
-  //             for (i = length - 1; i >= 0; i--) {
-  //                 operator.options[i] = null;
-  //             }
-  //             var value_type = $(this).val();
-  //             var value_attribute = $('#attributes option:selected').text();
-  //             operator.options[0] = new Option('Select operator', "");
-  //             if (value_type == 'xsd:short' || value_type == 'xsd:int' || value_type ==
-  //                 'xsd:double') {
-  //                 var operator1 = document.getElementById("operator");
-  //                 operator1.options[1] = new Option('>', '>');
-  //                 operator1.options[2] = new Option('<', '<');
-  //                 operator1.options[3] = new Option('=', '=');
-  //                 operator1.options[4] = new Option('<=', '<=');
-  //                 operator1.options[5] = new Option('=>', '=>');
-  //                 operator1.options[6] = new Option('IN ()', 'IN');
-  //                 operator1.options[7] = new Option('OR ||', 'OR');
-  //                 operator1.options[8] = new Option('AND &', 'AND');
-  //             } else if (value_type == 'xsd:string') {
-  //                 var operator1 = document.getElementById("operator");
-  //                 operator1.options[1] = new Option('Like', 'ILike');
-  //                 operator1.options[2] = new Option('IN ()', 'IN');
-  //                 operator1.options[3] = new Option('OR ||', 'OR');
-  //                 operator1.options[4] = new Option('AND &', 'AND');
-  //             }
-
-
-  //             var selectvalue = document.getElementById("selectvalue");
-  //             var length = selectvalue.options.length;
-  //             for (i = length - 1; i >= 0; i--) {
-  //                 selectvalue.options[i] = null;
-  //             }
-
-  //             $(document).ready(function() {
-  //                 $.ajax({
-  //                     type: "GET",
-  //                     url: "https://portal.tcplgeo.com/geoservers/wfs?service=wfs&version=1.0.0&request=getfeature&typename=" +
-  //                         attributes + "&PROPERTYNAME=" + value_attribute,
-  //                     dataType: "xml",
-  //                     success: function(xml) {
-  //                         var select3 = $('#selectvalue');
-  //                         var unq = new Array();
-  //                         $(xml).each(function() {
-  //                             $(this).find('gml\\:featureMember')
-  //                                 .each(function() {
-  //                                     unq.push($(this)
-  //                                         .text());
-  //                                 });
-  //                             let unique = unq.filter((item, i,
-  //                                 ar) => ar.indexOf(
-  //                                 item) === i);
-  //                             for (let i = 0; i < unique
-  //                                 .length; i++) {
-  //                                 select3.append(
-  //                                     "<option class='ddindent' value='" +
-  //                                     unique[i] + "'>" +
-  //                                     unique[i] + "</option>");
-  //                             }
-  //                         });
-  //                     }
-  //                 });
-  //             });
-  //             document.getElementById("textval").innerHTML = "From Layer" + attributes +
-  //                 " is " + value_attribute;
-  //         });
-
-  //     });
-  // });
+                          var select2 = $('#attributes');
+                          $(xml).find('xsd\\:sequence').each(function() {
+                              $(this).find('xsd\\:element').each(
+                                  function() {
+                                      var value = $(this)
+                                          .attr('name');
+                                      var type = $(this).attr(
+                                          'type');
+                                      if (value != 'geom' &&
+                                          value != 'the_geom'
+                                      ) {
+                                          select2.append(
+                                              "<option class='ddindent' value='" +
+                                              type +
+                                              "'>" +
+                                              value +
+                                              "</option>");
+                                      }
+                                  });
+                          });
+                      }
+                  })
+              });
+              document.getElementById("textval").innerHTML = value_layer1;
+          })
+      });
+      $(function() {
+          $("#attributes").change(function() {
+              var operator = document.getElementById("operator");
+              var attributes = $("#layer option:selected").text();
+              var length = operator.options.length;
+              for (i = length - 1; i >= 0; i--) {
+                  operator.options[i] = null;
+              }
+              var value_type = $(this).val();
+              var value_attribute = $('#attributes option:selected').text();
+              operator.options[0] = new Option('Select operator', "");
+              if (value_type == 'xsd:short' || value_type == 'xsd:int' || value_type ==
+                  'xsd:double') {
+                  var operator1 = document.getElementById("operator");
+                  operator1.options[1] = new Option('>', '>');
+                  operator1.options[2] = new Option('<', '<');
+                  operator1.options[3] = new Option('=', '=');
+                  operator1.options[4] = new Option('<=', '<=');
+                  operator1.options[5] = new Option('=>', '=>');
+                  operator1.options[6] = new Option('IN ()', 'IN');
+                  operator1.options[7] = new Option('OR ||', 'OR');
+                  operator1.options[8] = new Option('AND &', 'AND');
+              } else if (value_type == 'xsd:string') {
+                  var operator1 = document.getElementById("operator");
+                  operator1.options[1] = new Option('Like', 'ILike');
+                  operator1.options[2] = new Option('IN ()', 'IN');
+                  operator1.options[3] = new Option('OR ||', 'OR');
+                  operator1.options[4] = new Option('AND &', 'AND');
+              }
 
 
+              var selectvalue = document.getElementById("selectvalue");
+              var length = selectvalue.options.length;
+              for (i = length - 1; i >= 0; i--) {
+                  selectvalue.options[i] = null;
+              }
 
-  // $(function() {
-  //     $("#selectvalue").change(function() {
-  //         var vars = ['layer', 'attributes', 'operator', 'selectvalue'];
-  //         for (let i = 0; i < vars.length; i++) {
-  //             //   var operator = document.getElementById("operator");
-  //             var layer = $("#layer option:selected").text();
-  //             var attributes = $("#attributes option:selected").text();
-  //             var operator = $("#operator option:selected").text();
-  //             var selectvalue = $("#selectvalue option:selected").text();
-  //         }
-  //         document.getElementById("textval").innerHTML = "From Layer " + layer + " column is " +
-  //             attributes + " " + operator + " value is " + selectvalue;
+              $(document).ready(function() {
+                  $.ajax({
+                      type: "GET",
+                      url: "https://portal.tcplgeo.com/geoservers/wfs?service=wfs&version=1.0.0&request=getfeature&typename=" +
+                          attributes + "&PROPERTYNAME=" + value_attribute,
+                      dataType: "xml",
+                      success: function(xml) {
+                          var select3 = $('#selectvalue');
+                          var unq = new Array();
+                          $(xml).each(function() {
+                              $(this).find('gml\\:featureMember')
+                                  .each(function() {
+                                      unq.push($(this)
+                                          .text());
+                                  });
+                              let unique = unq.filter((item, i,
+                                  ar) => ar.indexOf(
+                                  item) === i);
+                              for (let i = 0; i < unique
+                                  .length; i++) {
+                                  select3.append(
+                                      "<option class='ddindent' value='" +
+                                      unique[i] + "'>" +
+                                      unique[i] + "</option>");
+                              }
+                          });
+                      }
+                  });
+              });
+              document.getElementById("textval").innerHTML = "From Layer" + attributes +
+                  " is " + value_attribute;
+          });
 
-  //         var sql_filter1 = attributes + " Like '" + selectvalue + "'"
-  //         // console.log(sql_filter1)
-  //         fitbou(sql_filter1, layer)
-
-  //         var wms_layerf = L.tileLayer.wms(
-  //             "https://portal.tcplgeo.com/geoservers/DP/wms", {
-  //                 layers: layer,
-  //                 format: "image/png",
-  //                 transparent: true,
-  //                 tiled: true,
-  //                 version: "1.1.0",
-  //                 attribution: "ugc",
-  //                 opacity: 1,
-  //                 cql_filter: sql_filter1,
-  //                 styles: 'highlight',
-
-  //             }
-  //         );
-  //         wms_layerf.addTo(map);
-
-
-  //         function fitbou(filter, layer1) {
-  //             var urlm =
-  //                 "https://portal.tcplgeo.com/geoservers/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" +
-  //                 layer1 + "&CQL_FILTER=" + filter + "&outputFormat=application/json";
-  //             // console.log(urlm)
-  //             $.getJSON(urlm, function(data) {
-  //                 geojson = L.geoJson(data, {});
-  //                 map.fitBounds(geojson.getBounds());
-  //             });
-  //         };
+      });
+  });
 
 
-  //     });
-  // })
 
-  //         </script>
+  $(function() {
+      $("#selectvalue").change(function() {
+          var vars = ['layer', 'attributes', 'operator', 'selectvalue'];
+          for (let i = 0; i < vars.length; i++) {
+              //   var operator = document.getElementById("operator");
+              var layer = $("#layer option:selected").text();
+              var attributes = $("#attributes option:selected").text();
+              var operator = $("#operator option:selected").text();
+              var selectvalue = $("#selectvalue option:selected").text();
+          }
+          document.getElementById("textval").innerHTML = "From Layer " + layer + " column is " +
+              attributes + " " + operator + " value is " + selectvalue;
+
+          var sql_filter1 = attributes + " Like '" + selectvalue + "'"
+          // console.log(sql_filter1)
+          fitbou(sql_filter1, layer)
+
+          var wms_layerf = L.tileLayer.wms(
+              "https://portal.tcplgeo.com/geoservers/DP/wms", {
+                  layers: layer,
+                  format: "image/png",
+                  transparent: true,
+                  tiled: true,
+                  version: "1.1.0",
+                  attribution: "ugc",
+                  opacity: 1,
+                  cql_filter: sql_filter1,
+                  styles: 'highlight',
+
+              }
+          );
+          wms_layerf.addTo(map);
+
+
+          function fitbou(filter, layer1) {
+              var urlm =
+                  "https://portal.tcplgeo.com/geoservers/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" +
+                  layer1 + "&CQL_FILTER=" + filter + "&outputFormat=application/json";
+              // console.log(urlm)
+              $.getJSON(urlm, function(data) {
+                  geojson = L.geoJson(data, {});
+                  map.fitBounds(geojson.getBounds());
+              });
+          };
+
+
+      });
+  })
+
+          </script>
 
       
     </body>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map Example</title>
+    <!-- Leaflet CSS and JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Turf.js for spatial operations -->
+    <script src="https://unpkg.com/@turf/turf@6.3.0"></script>
+</head>
+<body>
+    <!-- Map container -->
+    <div id="map" style="height: 500px;"></div>
+
+    <script>
+        // Function to convert shapefile to GeoJSON using ogre.adc4gis.com
+        async function convertShapefileToGeoJSON(shapefilePath) {
+            // Create a FormData object
+            const formData = new FormData();
+
+            // Append necessary parameters to the FormData object
+            formData.append('upload', true);
+            formData.append('shapefile', new Blob([new Uint8Array(await fetch(shapefilePath).then(response => response.arrayBuffer()))]));
+
+            // Send a POST request to ogre.adc4gis.com and wait for the response
+            const response = await fetch('https://ogre.adc4gis.com/convert', {
+                method: 'POST',
+                body: formData
+            });
+
+            // Parse the response as JSON
+            const result = await response.json();
+
+            // Return the GeoJSON result
+            return result;
+        }
+
+        // Specify the path to your shapefile
+        var shapefilePath = 'C:\\Users\\91766\\Downloads\\Man_TPS_Complete\\Man_TPS.shp';
+
+        // Convert the shapefile to GeoJSON
+        convertShapefileToGeoJSON(shapefilePath)
+            .then(result => {
+                console.log(result);
+
+                // Load the GeoJSON data
+                var geojson = result;
+
+                // Create a Leaflet map centered around the data
+                var map = L.map('map').setView([0, 0], 2);
+
+                // Add a tile layer (you can choose a different provider if needed)
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+
+                // Add GeoJSON layer to the map
+                L.geoJSON(geojson, {
+                    // Customize the styling of the GeoJSON layer (optional)
+                    style: function (feature) {
+                        return { color: 'blue' };
+                    },
+                    // Add a marker for each point feature
+                    pointToLayer: function (feature, latlng) {
+                        return L.marker(latlng);
+                    }
+                }).addTo(map);
+            })
+            .catch(error => {
+                console.error('Error converting shapefile to GeoJSON:', error);
+            });
+    </script>
+</body>
+</html>

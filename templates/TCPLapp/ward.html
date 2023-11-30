@@ -8,22 +8,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="{% static 'images/logo1.png' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo.png' %}">
 
-    <title>TCPL</title>
+    <title>Geopulsea</title>
     <!-- This is how to include a static file -->
     <link rel="stylesheet" href="{% static 'css/mystyle.css' type='text/css' %}" />
+    
     <!-- <link rel="stylesheet" href="{% static 'libs/jquery.jsjquery-ui-1.12.1/jquery-ui.css' %}"> -->
     <!-- Leaflet -->
+
     <link rel="stylesheet" href="{% static 'libs/leaflet/leaflet.css' %}" />
+
     <!-- BOOTSTRAP only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <!-- ZoomBar & slider-->
     <link rel="stylesheet" href="{% static 'libs/L.Control.ZoomBar-master/src/L.Control.ZoomBar.css' %}" />
+
     <link rel="stylesheet" href="{% static 'libs/Leaflet.zoomslider-master/src/L.Control.Zoomslider.css' %}" />
+
     <!-- MousePosition -->
-    <link rel="stylesheet" href="{% static 'libs/Leaflet.MousePosition-master/src/L.Control.MousePosition.css ' %}" />
+    <link rel="stylesheet" href="{% static 'libs/Leaflet.MousePosition-master/src/L.Control.MousePosition.css' %}" />
     <!-- line-measure -->
     <link rel="stylesheet" href="{% static 'libs/polyline-measure/line-measure.css' %}" />
     
@@ -60,32 +65,38 @@
         max-height: 30vh; /* Set a maximum height for the footer */
     }
     
-    .minimize-button {
-        position: absolute;
-        top: 20px;
-        right: 10px;
-        cursor: pointer;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        padding: 2px 6px;
-        font-size: 18px;
-        z-index: 2;
-    }
+
     
     .navbar {
-        z-index: 3; /* Ensure navbar is above footer */
+        z-index: 3;
+         /* Ensure navbar is above footer */
+        height: 30px;
     }
     
-    .table th,
-    .table td {
-        border-right: 1px solid #ccc;
+    #table-container {
+        display: flex;
+        justify-content: center;
+    }
+    
+    table {
+        width: 100%; /* Set the table width to 100% of the container */
+        border-collapse: collapse;
+        margin: 10px;
+    }
+    
+    th, td {
+        border: 1px solid black;
         padding: 8px;
+        text-align: left;
     }
     
-    .table th:last-child,
-    .table td:last-child {
-        border-right: none;
+    th {
+        background-color: #f2f2f2;
     }
+    
+
+
+ 
 
 /* for arrow buttons */
  
@@ -151,6 +162,17 @@
     border-radius: 5px;
     padding: 2px;
 }
+
+.obj{
+    padding-top: 50px;
+}
+
+.obj1{
+    padding-top: 58px;
+    padding-left: 50px;
+}
+
+
 
 </style>
 
@@ -227,7 +249,7 @@
     });
     
     var mapContainer = document.getElementById("map");
-    mapContainer.style.height = "58vh";
+    mapContainer.style.height = "90px";
     mapContainer.style.top = "30px";
     
 </script>
@@ -271,324 +293,14 @@
 
 
 
-<!-- ============= for PMC_Missing_Link layer ======================= -->
-
-<footer class="footer" id="container1" style="display: none;">
-    <div class="cl1">
-        <button id="PMC_Missing_Link_BufferhideTableButton" onclick="hideTable1()">X</button>
-    </div>
-    <table id="PMC_Missing_Link_Buffer" class="table">  
-        <tr>
-            {% for key in properties.0.keys %} <!-- Assuming properties is not empty -->
-                <th oncontextmenu="processColumn1(event, '{{ key }}'); return false;">{{ key }}</th>
-            {% endfor %}
-        </tr>
-        {% for property in properties %}
-            <tr>
-                {% for value in property.values %}
-                    <td>{{ value }}</td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-    </table>
-</footer>
-
-<script>
-    function hideTable1() {
-        var container = document.getElementById("container1");
-        container.style.display = "none";
-    }
-
-    function toggleTable() {
-        var container = document.getElementById("container1");
-        container.style.display = "block";
-    }
-
-    function processColumn1(event, columnName) {
-        event.preventDefault();
-
-        var table = document.getElementById("PMC_Missing_Link_Buffer");
-        var columnIndex;
-        var total = 0;
-        var rowCount = 0;
-
-        // Find the index of the column
-        for (var i = 0; i < table.rows[0].cells.length; i++) {
-            if (table.rows[0].cells[i].textContent === columnName) {
-                columnIndex = i;
-                break;
-            }
-        }
-
-        // Process the column values
-        var numericRegex = /^-?\d*(\.\d+)?$/;
-
-        for (var i = 1; i < table.rows.length; i++) {
-            var cell = table.rows[i].cells[columnIndex];
-            var value = cell.textContent.trim();
-
-            if (numericRegex.test(value) && value !== "") {
-                total += parseFloat(value);
-            } else if (value !== "") {
-                rowCount++;
-            }
-        }
-
-        if (!isNaN(total) && rowCount === 0) {
-            alert("Sum of numeric values in column '" + columnName + "': " + total);
-        } else if (rowCount > 0) {
-            alert("Total count of character/string values in column '" + columnName + "': " + rowCount);
-        }
-
-        return false;
-    }
-</script>
-
-
-<!-- ============= for missinglink layer ======================= -->
-
-<footer class="footer" id="container2" style="display: none;">
-    <div class="cl2">
-        <button id="missinglinkhideTableButton" onclick="hideTable2()">X</button>
-    </div>
-    <table id="missinglink" class="table">
-        <tr>
-            {% for key in missinglink.0.keys %} <!-- Assuming properties is not empty -->
-            <th oncontextmenu="processColumn2(event, '{{ key }}'); return false;">{{ key }}</th>
-            {% endfor %}
-        </tr>
-        {% for property in missinglink %}
-            <tr>
-                {% for value in property.values %}
-                    <td>{{ value }}</td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-    </table>
-</footer>
-
-
-<script>
-    function hideTable2() {
-        var container = document.getElementById("container2");
-        container.style.display = "none";
-    }
-
-    function toggleTable2() {
-        var container = document.getElementById("container2");
-        container.style.display = "block";
-    }
-
-    function processColumn2(event, columnName) {
-        event.preventDefault();
-
-        var table = document.getElementById("missinglink");
-        var columnIndex;
-        var total = 0;
-        var rowCount = 0;
-
-        // Find the index of the column
-        for (var i = 0; i < table.rows[0].cells.length; i++) {
-            if (table.rows[0].cells[i].textContent === columnName) {
-                columnIndex = i;
-                break;
-            }
-        }
-
-        // Process the column values
-        var numericRegex = /^-?\d*(\.\d+)?$/;
-
-
-        for (var i = 1; i < table.rows.length; i++) {
-            var cell = table.rows[i].cells[columnIndex];
-            var value = cell.textContent.trim();
-
-            if (numericRegex.test(value) && value !== "") {
-                total += parseFloat(value);
-            } else if (value !== "") {
-                rowCount++;
-            }
-        }
-
-        if (!isNaN(total) && rowCount === 0) {
-            alert("Sum of numeric values in column '" + columnName + "': " + total);
-        } else if (rowCount > 0) {
-            alert("Total count of character/string values in column '" + columnName + "': " + rowCount);
-        }
-
-        return false;
-    }
-</script>
-
-
-
-
-
-<!-- =============== PMCroads===================== -->
-
-<footer class="footer" id="container3" style="display: none;">
-    <div class="cl3">
-        <button id="PMCroadshideTableButton" onclick="hideTable3()">X</button>
-    </div>
-    <table id="PMCroads" class="table">
-        <tr>
-            {% for key in PMCroads.0.keys %}
-                <th oncontextmenu="processColumn(event, '{{ key }}'); return false;">{{ key }}</th>
-            {% endfor %}
-        </tr>
-        {% for property in PMCroads %}
-            <tr>
-                {% for value in property.values %}
-                    <td>{{ value }}</td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-    </table>
-</footer>
-
-<script>
-    function hideTable3() {
-        var container = document.getElementById("container3");
-        container.style.display = "none";
-    }
-
-    function toggleTable3() {
-        var container = document.getElementById("container3");
-        container.style.display = "block";
-    }
-
-    function processColumn(event, columnName) {
-        event.preventDefault();
-
-        var table = document.getElementById("PMCroads");
-        var columnIndex;
-        var total = 0;
-        var rowCount = 0;
-
-        // Find the index of the column
-        for (var i = 0; i < table.rows[0].cells.length; i++) {
-            if (table.rows[0].cells[i].textContent === columnName) {
-                columnIndex = i;
-                break;
-            }
-        }
-
-        // Process the column values
-        var numericRegex = /^-?\d*(\.\d+)?$/;
-
-
-        for (var i = 1; i < table.rows.length; i++) {
-            var cell = table.rows[i].cells[columnIndex];
-            var value = cell.textContent.trim();
-
-            if (numericRegex.test(value) && value !== "") {
-                total += parseFloat(value);
-            } else if (value !== "") {
-                rowCount++;
-            }
-        }
-
-        if (!isNaN(total) && rowCount === 0) {
-            alert("Sum of numeric values in column '" + columnName + "': " + total);
-        } else if (rowCount > 0) {
-            alert("Total count of character/string values in column '" + columnName + "': " + rowCount);
-        }
-
-        return false;
-    }
-</script>
-
-
-
-
-<!-- =============== DP_Roads===================== -->
-
-
-<footer class="footer" id="container4" style="display: none;">
-    <div class="cl4">
-        <button id="DP_RoadshideTableButton" onclick="hideTable4()">X</button>
-    </div>
-    <table id="DP_Roads" class="table">
-        <tr>
-            {% for key in DP_Roads.0.keys %} <!-- Assuming properties is not empty -->
-                <th oncontextmenu="processColumn4(event, '{{ key }}'); return false;">{{ key }}</th>
-            {% endfor %}
-        </tr>
-        {% for property in DP_Roads %}
-            <tr>
-                {% for value in property.values %}
-                    <td>{{ value }}</td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-    </table>
-</footer>
-
-<script>
-    function hideTable4() {
-        var container = document.getElementById("container4");
-        container.style.display = "none";
-    }
-
-    function toggleTable() {
-        var container = document.getElementById("container4");
-        container.style.display = "block";
-    }
-
-    function processColumn4(event, columnName) {
-        event.preventDefault();
-
-        var table = document.getElementById("DP_Roads");
-        var columnIndex;
-        var total = 0;
-        var rowCount = 0;
-
-        // Find the index of the column
-        for (var i = 0; i < table.rows[0].cells.length; i++) {
-            if (table.rows[0].cells[i].textContent === columnName) {
-                columnIndex = i;
-                break;
-            }
-        }
-
-        // Process the column values
-        var numericRegex = /^-?\d*(\.\d+)?$/;
-
-        for (var i = 1; i < table.rows.length; i++) {
-            var cell = table.rows[i].cells[columnIndex];
-            var value = cell.textContent.trim();
-
-            if (numericRegex.test(value) && value !== "") {
-                total += parseFloat(value);
-            } else if (value !== "") {
-                rowCount++;
-            }
-        }
-
-        if (!isNaN(total) && rowCount === 0) {
-            alert("Sum of numeric values in column '" + columnName + "': " + total);
-        } else if (rowCount > 0) {
-            alert("Total count of character/string values in column '" + columnName + "': " + rowCount);
-        }
-
-        return false;
-    }
-</script>
-
-
-
-
-
-
-
+<!-
 <!-- ==================================== -->
 
-        <section id="navbar-wrapper" >
 
-            <nav class="navbar navbar-expand-custom navbar-mainbg px-5">
-                <a class="text-decoration-none fw-bold" href="{% url 'ward' %}">
-                    <h5 class="p-2 text-left fw-bold" style="color: #004aad;"> <img class="imglogo" src="{% static 'images/logo1.png' %}"
-                            alt="image not found" style="width: 50px; height: 50px;"> TCPLGeo
+<nav class="navbar navbar-expand-custom navbar-mainbg px-5">
+                <a class="text-decoration-none imglogo fw-bold" href="{% url 'ward' %}">
+                    <h5 class="p-2 text-left fw-bold" style="color: #004aad;"> <img  src="{% static 'images/logo.png' %}"
+                            alt="image not found" style="width: 50px; height: 50px;"> GeoPulse
                     </h5>
 
                 </a>
@@ -666,9 +378,8 @@
                     </ul>
 
                  <!-- </div> -->
-            </nav>
+</nav>
 
-        </section>
 
 
 
@@ -680,7 +391,7 @@
         
 
         <!-- /////////////////////////select by attribute/////////////////// -->
-        <div id="boxattribute" class="" style="padding-left: 220px;">     
+        <div class="obj" id="boxattribute" class="" style="padding-left: 220px;">     
             <button id="button">Select by Attributes</button>
             <!-- <button id="button" class="d-sm-none d-block "><img src="{% static 'images/selectByAttribute.png' %}" style="height: 40px; width: 40px;"></button> -->
 
@@ -740,7 +451,7 @@
         </div> 
 
     <!-- /////////////////////////select by Location/////////////////// -->
-        <div id="boxLocation" class="pt-2 ps-5">     
+        <div class="obj1" id="boxLocation" class="pt-2 ps-5">     
             <button id="btnLocation" >Select by Location</button>
             <!-- <button id="btnLocation" class="d-sm-none d-block "><img src="{% static 'images/selectByLocation.png' %}" style="height: 40px; width: 40px;"></button> -->
 
@@ -802,7 +513,10 @@
     </div> 
     <!-- <button class="btn-success" id="btnData1" type="button" onclick="ClearMe()" style="padding-left: 270px;">Clear</button> -->
     
+    
     <div class="button-group" id="buttonGroup">
+        <br><br>
+
         <button class="drwbtn" onclick="exportToKML()"><i class="fas fa-download"></i> <br><span style="font-size: 12px;">KML</span></button>
     
         <button class="drwbtn" onclick="enableLine()"><i class="fas fa-arrows-alt-h"></i></button>
@@ -812,60 +526,145 @@
 
         <button class="drwbtn" onclick="clearMap()"><i class="fas fa-trash-alt"></i></button>
 
-        <!-- ======= layers data=========== -->
-
-        <span class="button-container">
-            <button class="drwbtn" id="layersBtn"><i class="fa-solid fa-square-caret-right"></i></button>
-        
-            <span class="arrowbuttons" id="buttons" style="display: none;">
-                <!-- Your buttons go here -->
-                <button class="lr"  onclick="toggleTable('container4')">DP_Roads</button>
-
-                <button  class="lr"  onclick="toggleTable('container3')">PMCroads</button>
 
 
-                <button class="lr" onclick="toggleTable('container2')">Missing Links</button>
-
-                <button class="lr"  onclick="toggleTable('container1')">PMC_Missing_Link</button>
-        
+<!-- ======================================== -->
                
+
+
+<!-- ======= start copy layers data=========== -->
+<!-- ======================================== -->
+
+<!-- Add a new div for the table -->
+<div id="table-container" class="footer">
+    <!-- Close button or symbol -->
+    <button id="closeTableBtn" onclick="closeTable()">X</button>
+
+    <!-- Table content will be added here -->
+</div>
+
+<div class="button-container" style="position: relative;">
+    <button class="drwbtn" id="layersBtn"><i class="fa-sharp fa-solid fa-layer-group"></i></button>
+
+    <div class="arrowbuttons" id="buttons" style="display: none; position: absolute; top: 30px; z-index: 1;">
+        <!-- Your buttons go here -->
+        <button class="lr" onclick="fetchAndDisplayDataInTable('PMC_ward_rd')">PMC_ward_rd</button>
+        <button class="lr" onclick="fetchAndDisplayDataInTable('Final_Ward_PLU')">Final_Ward_PLU</button>
+        <button class="lr" onclick="fetchAndDisplayDataInTable('PMC_Missing_Links')">PMC_Missing_Link</button>
+        <button class="lr" onclick="fetchAndDisplayDataInTable('pune-electoral-wards')">pune-electoral-wards</button>
         
-               
-        
-               
-        
-            </span>
-        </span>
-        
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var layersBtn = document.getElementById('layersBtn');
-                var buttonsDiv = document.getElementById('buttons');
-        
-                layersBtn.addEventListener('click', function() {
-                    if (buttonsDiv.style.display === 'none' || buttonsDiv.style.display === '') {
-                        buttonsDiv.style.display = 'block';
-                    } else {
-                        buttonsDiv.style.display = 'none';
-                    }
-                });
-            });
-        
-            function toggleTable(tableId) {
-                var containers = document.querySelectorAll('.footer');
-                containers.forEach(function(container) {
-                    container.style.display = 'none';
-                });
-        
-                var container = document.getElementById(tableId);
-                container.style.display = 'block';
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var layersBtn = document.getElementById('layersBtn');
+        var buttonsDiv = document.getElementById('buttons');
+
+        layersBtn.addEventListener('click', function () {
+            if (buttonsDiv.style.display === 'none' || buttonsDiv.style.display === '') {
+                buttonsDiv.style.display = 'block';
+            } else {
+                buttonsDiv.style.display = 'none';
             }
-        </script>
-        
+        });
+    });
 
-        <!-- ======= end layers data=========== -->
+    function toggleTable(tableId) {
+        var containers = document.querySelectorAll('.footer');
+        containers.forEach(function (container) {
+            container.style.display = 'none';
+        });
+
+        var container = document.getElementById(tableId);
+        container.style.display = 'block';
+    }
+
+    // Function to fetch and display data in a table
+    function fetchAndDisplayDataInTable(layerName) {
+        var url = "https://portal.geopulsea.com/geoserver/PMC/wfs";
+        var params = {
+            "service": "WFS",
+            "version": "2.0.0",
+            "request": "GetFeature",
+            "typeName": `PMC:${layerName}`,
+            "outputFormat": "application/json"
+        };
+
+        fetch(`${url}?${new URLSearchParams(params)}`)
+            .then(response => response.json())
+            .then(data => displayDataInTable(data.features.slice(0, 5)))
+            .catch(error => console.error(`Error fetching data for ${layerName}:`, error));
+    }
+
+    // Function to display data in a table
+    function displayDataInTable(features) {
+        var tableContainer = document.getElementById('table-container');
+
+        // Check if the container exists
+        if (!tableContainer) {
+            console.error('Table container not found.');
+            return;
+        }
+
+        // Clear previous content
+        tableContainer.innerHTML = '';
+
+        // Create a table
+        var table = document.createElement('table');
+        table.setAttribute('border', '1');
+        table.style.color = 'black';
+        table.style.width = '100%';
+
+        // Create table header
+        var headerRow = document.createElement('tr');
+        for (var key in features[0].properties) {
+            var headerCell = document.createElement('th');
+            headerCell.textContent = key;
+            headerRow.appendChild(headerCell);
+        }
+        table.appendChild(headerRow);
+
+        // Create table rows
+        features.forEach(function (feature) {
+            var row = document.createElement('tr');
+            for (var key in feature.properties) {
+                var cell = document.createElement('td');
+                cell.textContent = feature.properties[key];
+                row.appendChild(cell);
+            }
+            table.appendChild(row);
+        });
+
+        // Append the table to the container
+        tableContainer.appendChild(table);
+
+        // Close button or symbol (in the top right corner)
+        var closeButton = document.createElement('button');
+        closeButton.id = 'closeTableBtn';
+        closeButton.textContent = 'X';
+        closeButton.onclick = function () {
+            closeTable();
+        };
+        tableContainer.appendChild(closeButton);
+    }
+
+    // Function to close the table
+    function closeTable() {
+        var tableContainer = document.getElementById('table-container');
+        if (tableContainer) {
+            tableContainer.innerHTML = ''; // Clear content
+        }
+    }
+</script>
 
 
+
+
+
+
+<!-- ======= end copy layers data=========== -->
+<!-- ======================================== -->
         
         
         
@@ -930,7 +729,7 @@
 
             <!-- jquery -->
             <script>
-                var logoimage = "{% static 'images/logo1.png' %}"; // Replace with the actual URL of your image
+                var logoimage = "{% static 'images/logo.png' %}"; // Replace with the actual URL of your image
                 var imageUrl = "{% static 'images/legend1.png' %}"; // Replace with the actual URL of your image
             </script>
 
@@ -938,6 +737,8 @@
             <script src="https://code.jquery.com/jquery-3.7.0.min.js"
                 integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
             <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+
+
             <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 
             <!--leaflet-->
@@ -946,8 +747,10 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
                 crossorigin="anonymous"></script>
+
             <!--Zoombar-->
             <script src="{% static 'libs/L.Control.ZoomBar-master/src/L.Control.ZoomBar.js' %}"></script>
+
             <script src="{% static 'libs/Leaflet.zoomslider-master/src/L.Control.Zoomslider.js' %}"></script>
             <!--Mouse-position-->
             <script src="{% static 'libs/Leaflet.MousePosition-master/src/L.Control.MousePosition.js' %}"></script>

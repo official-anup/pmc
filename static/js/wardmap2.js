@@ -36,13 +36,7 @@ var baseLayers = {
 };
 
 
-// pune-admin-wards
-// pune-electoral-wards
-// PMC_Missing_links
-// PMC_Missing_links_buffer
-// PMC_ward_rd
-// PMC_ward_road_buffer1
-// Final_PLU(Railwayline,Final_Ward_PLU,Ward_PLU)
+
 
 var wms_layer = L.tileLayer.wms(
   "https://portal.geopulsea.com/geoserver/PMC/wfs",
@@ -81,11 +75,11 @@ var wms_layer3 = L.tileLayer.wms(
 var wms_layer4 = L.tileLayer.wms(
   "https://portal.geopulsea.com/geoserver/PMC/wfs",
   {
-    layers: "PMC:Final_Ward_PLU",
+    layers: "PMC:Final_PLU",
     format: "image/png",
     transparent: true,
     version: "1.1.0",
-    attribution: "Final_Ward_PLU"
+    attribution: "Final_PLU"
   }
 );
 
@@ -128,26 +122,13 @@ var wms_layer5 = L.tileLayer.wms(
   }
 );
 
-// var wms_layer1 = L.tileLayer.wms(
-//   "https://portal.geopulsea.com/geoserver/PMC/wfs",
-//   {
-//     layers: "PMC:DProamosaic",
-//     format: "image/png",
-//     transparent: true,
-//     version: "1.1.0",
-//     attribution: "DProamosaic"
-//   }
-// );
-// // osm.addTo(map)
-// wms_layer.addTo(map)
+
 
 
 
 var WMSlayers = {
   
-  // Pune_admin_wards: wms_layer,
-  // DProamosaic:wms_layer1,
-  Final_Ward_PLU:wms_layer4,
+  Final_PLU:wms_layer4,
 
   electoral:wms_layer5,
   
@@ -159,7 +140,7 @@ var WMSlayers = {
   
 
 
-};
+}; 
 var control = new L.control.layers(baseLayers, WMSlayers).addTo(map);
 
 //===================================================
@@ -209,15 +190,13 @@ north.addTo(map);
 
 (uri =
   "https://portal.geopulsea.com/geoserver/PMC/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=topp:states"), {
-  // namedToggle: false,
+
 };
 L.wmsLegend(uri);
-//
 
-// control
-// mouse position
 
 //******************************************************************Scale***************************************************************
+
 
 L.control
   .scale({
@@ -769,52 +748,51 @@ $(function () {
       /////////////////////////////////
 
     
-console.log("get_json",data)
+       console.log("get_json",data)
       
-
-$(document).ready(function() {
-        $.getJSON(urlm, function(data) {
-          if (data.features.length > 0) {
-            // Loop through each feature
-            data.features.forEach(function(feature) {
-              var id = feature.properties.ID;
+// $(document).ready(function() {
+//         $.getJSON(urlm, function(data) {
+//           if (data.features.length > 0) {
+//             // Loop through each feature
+//             data.features.forEach(function(feature) {
+//               var id = feature.properties.ID;
               
-              var length_m = feature.properties.Length_m;
+//               var length_m = feature.properties.Length_m;
               
-              var missing_existing = feature.properties.Missing_Existing;
+//               var missing_existing = feature.properties.Missing_Existing;
               
-              var name = feature.properties.Name;
+//               var name = feature.properties.Name;
               
              
               
-              var road_width = feature.properties.Road_width;
+//               var road_width = feature.properties.Road_width;
               
-              var shape_length = feature.properties.Shape_Length;
+//               var shape_length = feature.properties.Shape_Length;
               
-              var ward_num = feature.properties.wardnum;
+//               var ward_num = feature.properties.wardnum;
       
-              // Create a new row
-              var newRow = $("<tr>");
+//               // Create a new row
+//               var newRow = $("<tr>");
       
-              // Append cells with data
-              newRow.append("<td>" + id + "</td>");
-              newRow.append("<td>" + length_m + "</td>");
-              newRow.append("<td>" + missing_existing + "</td>");
-              newRow.append("<td>" + name + "</td>");
+//               // Append cells with data
+//               newRow.append("<td>" + id + "</td>");
+//               newRow.append("<td>" + length_m + "</td>");
+//               newRow.append("<td>" + missing_existing + "</td>");
+//               newRow.append("<td>" + name + "</td>");
             
-              newRow.append("<td>" + road_width + "</td>");
-              newRow.append("<td>" + shape_length + "</td>");
-              newRow.append("<td>" + ward_num + "</td>");
+//               newRow.append("<td>" + road_width + "</td>");
+//               newRow.append("<td>" + shape_length + "</td>");
+//               newRow.append("<td>" + ward_num + "</td>");
       
-              // Append the row to the table
-              $("#other-data-table tbody").append(newRow);
-            });
+//               // Append the row to the table
+//               $("#other-data-table tbody").append(newRow);
+//             });
       
-            // Show the table after data is ready
-            $('#other-data-table').show();
-          }
-        });
-      });
+//             // Show the table after data is ready
+//             $('#other-data-table').show();
+//           }
+//         });
+//       });
       
 
 
@@ -1314,6 +1292,8 @@ polygonCoords = [];
 circleCenter = null;
 circleRadius = 0;
 }
+
+
 
 function clearAll() {
 drawnItems.clearLayers();

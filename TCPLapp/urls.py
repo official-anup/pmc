@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_view 
 
 from django.urls import path
-from .views import CustomLoginView,upload_file,upload_file_page,UploadedFile,customer_details,login,CustomerRegistrationForm,shantaram,CustomerRegistrationForm,ProfileView,basemap,user_details,login_required,logout,LoginForm,LoginView,index,zoneDetail,planSurvey,mapCalculator,autocomplete,searchOnClick,convert_To_Geojson,save_location,get_locations,delete_location,before_payment,payment_done,locations,getInfoValues
+from .views import CustomLoginView,upload_file,profilepage,upload_file_page,UploadedFile,customer_details,login,CustomerRegistrationForm,shantaram,CustomerRegistrationForm,ProfileView,basemap,user_details,login_required,logout,LoginForm,LoginView,index,zoneDetail,planSurvey,mapCalculator,autocomplete,searchOnClick,convert_To_Geojson,get_locations,delete_location,before_payment,payment_done,locations,getInfoValues
 from django.conf.urls.static import static
 
 from TCPLapp import views
@@ -22,6 +22,8 @@ path('', CustomLoginView.as_view(),name="login"),
 path('registration/', CustomerRegistrationForm.as_view(),name="customerregistration"),
   
 path('profile/', ProfileView.as_view(), name='profile'),
+path('profilepage/', profilepage, name='profilepage'),
+
 
 path('basemap/', basemap, name='basemap'),
    
@@ -63,6 +65,9 @@ path('customer_details/<int:id>',customer_details,name='customer_details'),
     
 path('logout/',logout,name='logout'),
     
+    
+path('save_search_data/', views.save_search_data, name='save_search_data'),
+path('search_history/',views.search_history, name='search_history'),
     # #path('coordinates/',views.coordinates,name='coordinates'),
     
 path('index/', index,name='index'),
@@ -84,9 +89,9 @@ path('searchOnClick/', searchOnClick, name='searchOnClick'),
     
 # path('Out_table/',Out_table, name='Out_table'),
 #bookmark   
-path('save-location/',save_location, name='save_location'),
+# path('save-location/',save_location, name='save_location'),
     
-path('get-locations/',get_locations, name='get_locations'),
+# path('get-locations/',get_locations, name='get_locations'),
     
 path('delete-location/',delete_location, name='delete_location'),
 
@@ -111,9 +116,11 @@ path('user_details/', user_details, name='user_details'),
 path('Queryform/', views.Queryform.as_view(),name="Queryform"),
 
 
-# path('ward/', views.ward_table, name='ward'),
+path('ward2/', views.ward2, name='ward2'),
+
 path('ward/', views.ward, name='ward'),
 
+path('display_layers/', views.display_layers, name='display_layers'),
 
 # path('ward/<str:user_role>/', views.ward_view, name='ward'),
 path('select_by_location/', views.select_by_location, name='select_by_location'),
@@ -130,5 +137,8 @@ path('shantaram/', shantaram,name='shantaram'),
 
 path('trial/', views.trial, name='trial'),
 
-    
+    path('save_location/', views.SaveLocationView.as_view(), name='save_location'),
+    path('get_locations/', get_locations, name='get_locations'),
+
+
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

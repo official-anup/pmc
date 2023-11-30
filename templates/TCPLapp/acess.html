@@ -1,0 +1,59 @@
+import requests
+from requests.auth import HTTPBasicAuth
+from IPython.display import display, HTML
+
+geoserver_url = "http://localhost:8080/geoserver/rest"
+admin_username = "admin"
+admin_password = "geoserver"
+regular_username = "anup"
+regular_password = "anup12345"
+
+def get_all_layers(username, password):
+    try:
+        workspaces_url = f"{geoserver_url}/workspaces.json"
+        with requests.get(workspaces_url, auth=HTTPBasicAuth(username, password)) as response:
+            response.raise_for_status()
+            workspaces_data = response.json().get('workspaces', {}).get('workspace', [])
+
+            all_layers = []
+            for workspace in workspaces_data:
+                workspace_name = workspace['name']
+                layers_url = f"{geoserver_url}/workspaces/{workspace_name}/layers.json"
+                with requests.get(layers_url, auth=HTTPBasicAuth(username, password)) as layers_response:
+                    try:
+                        layers_data = layers_response.json()
+                        if isinstance(layers_data, dict) and 'layers' in layers_data:
+                            layers_list = layers_data['layers'].get('layer', [])
+                            print(f"Workspace: {workspace_name}, Layers: {layers_list}")
+                            all_layers.extend(layers_list)
+                        else:
+                            print(f"Unexpected response content: {layers_response.content}")
+                    except ValueError as ve:
+                        print(f"Error decoding JSON: {ve}")
+                        print(f"Response content: {layers_response.content}")
+
+            return all_layers
+
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to fetch layers. Error: {e}")
+        return []
+
+# Rest of the code remains unchanged
+
+# Check if the user is an admin or a regular user
+admin_layers = get_all_layers(admin_username, admin_password)
+regular_layers = get_all_layers(regular_username, regular_password)
+
+# Display layers based on user role
+if admin_layers:
+    print("Admin User:")
+    display_layers(admin_layers)
+else:
+    print("No layers found for Admin User.")
+
+if regular_layers:
+    print("/////////////////////////////////////////////////////")
+    print("Regular User:")
+    display_layers(regular_layers)
+else:
+    print("No layers found for Regular User.")

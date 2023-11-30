@@ -10,6 +10,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="{% static 'images/logo1.png' %}">
 
+
+<!------------------------------------- new satrt ------------------------------------------->
+
+    <!-- Leaflet Draw CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+
+
+<!------------------------------------- new end ------------------------------------------->
+
+
     <title>TCPL</title>
     <!-- This is how to include a static file -->
     <link rel="stylesheet" href="{% static 'css/mystyle.css' type='text/css' %}" />
@@ -41,199 +51,69 @@
   
 <!-- Add your other JavaScript code -->
 <style>
-    
-  .my-swal-container
-  {
-    
-    align-items: center;
-    padding: 5px;
-    font-size: 10px;
-  }
-  .my-swal-input{
-   
-    width: 85%;
-    color:black;
-  }
-  .my_swal_title{
-    font-size: 20px;
-  }
-  .my-swal-button{
-    padding: 10px;
-  }
-  .my_icon{
-    font-size: 10px;
-  }
-  .my_swal_text{
-    font-size: 8px;
-  }
+    /* Navbar background color */
+    .navbar-light {
+      /*background-color: #004aad !important;*/
+    }
+  
+    /* Navbar text color */
+    .navbar-light .navbar-nav .nav-link {
+      color: black !important;
+      font-weight: bold;
+      margin-right: 50px;
+    }
+  
+    /* Navbar hover color */
+    .navbar-light .navbar-nav .nav-link:hover {
+      color: #004aad !important;
+    }
+    .dropdown-item:hover{
+        color: #004aad !important;   
+    }
+    a{
+        text-decoration: none;
+    }
+    table {
+      margin-top: 5px;
+      margin-left: 10px;
+      width: 100%;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    .delete-button button {
+      padding: 5px 10px;
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
 
-    @import url('https://fonts.googleapis.com/css?family=Roboto');
-
-body{
-	font-family: 'Roboto', sans-serif;
-}
-* {
-	margin: 0;
-	padding: 0;
-}
-i {
-	margin-right: 10px;
-}
-/*----------bootstrap-navbar-css------------*/
-.navbar-logo{
-	padding: 15px;
-	color: #fff;
-}
-.navbar-mainbg{
-	background-color: #eeeeee;
-	padding: 0px;
-}
-#navbarSupportedContent{
-	overflow: hidden;
-	position: relative;
-}
-#navbarSupportedContent ul{
-	padding: 0px;
-	margin: 0px;
-}
-#navbarSupportedContent ul li a i{
-	margin-right: 10px;
-}
-#navbarSupportedContent li {
-	list-style-type: none;
-	float: left;
-}
-#navbarSupportedContent ul li a{
-	color: rgba(255,255,255,0.5);
-    text-decoration: none;
-    font-size: 15px;
-    display: block;
-    padding: 20px 20px;
-    transition-duration:0.6s;
-	transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    position: relative;
-}
-#navbarSupportedContent>ul>li.active>a{
-	color: #004aad;
-	background-color: transparent;
-	transition: all 0.7s;
-}
-#navbarSupportedContent a:not(:only-child):after {
-	content: "\f105";
-	position: absolute;
-	right: 20px;
-	top: 10px;
-	font-size: 14px;
-	font-family: "Font Awesome 5 Free";
-	display: inline-block;
-	padding-right: 3px;
-	vertical-align: middle;
-	font-weight: 900;
-	transition: 0.5s;
-}
-#navbarSupportedContent .active>a:not(:only-child):after {
-	transform: rotate(90deg);
-}
-.hori-selector{
-	display:inline-block;
-	position:absolute;
-	height: 100%;
-	top: 0px;
-	left: 0px;
-	transition-duration:0.6s;
-	transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-	background-color: #fff;
-	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
-	margin-top: 10px;
-}
-.hori-selector .right,
-.hori-selector .left{
-	position: absolute;
-	width: 25px;
-	height: 25px;
-	background-color: #fff;
-	bottom: 10px;
-}
-.hori-selector .right{
-	right: -25px;
-}
-.hori-selector .left{
-	left: -25px;
-}
-.hori-selector .right:before,
-.hori-selector .left:before{
-	content: '';
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #eeeeee;
-}
-.hori-selector .right:before{
-	bottom: 0;
-    right: -25px;
-}
-.hori-selector .left:before{
-	bottom: 0;
-    left: -25px;
-}
-
-
-@media(min-width: 992px){
-	.navbar-expand-custom {
-	    -ms-flex-flow: row nowrap;
-	    flex-flow: row nowrap;
-	    -ms-flex-pack: start;
-	    justify-content: flex-start;
-	}
-	.navbar-expand-custom .navbar-nav {
-	    -ms-flex-direction: row;
-	    flex-direction: row;
-	}
-	.navbar-expand-custom .navbar-toggler {
-	    display: none;
-	}
-	.navbar-expand-custom .navbar-collapse {
-	    display: -ms-flexbox!important;
-	    display: flex!important;
-	    -ms-flex-preferred-size: auto;
-	    flex-basis: auto;
-	}
-}
-
-
-@media (max-width: 991px){
-	#navbarSupportedContent ul li a{
-		padding: 12px 30px;
-	}
-	.hori-selector{
-		margin-top: 0px;
-		margin-left: 10px;
-		border-radius: 0;
-		border-top-left-radius: 25px;
-		border-bottom-left-radius: 25px;
-	}
-	.hori-selector .left,
-	.hori-selector .right{
-		right: 10px;
-	}
-	.hori-selector .left{
-		top: -25px;
-		left: auto;
-	}
-	.hori-selector .right{
-		bottom: -25px;
-	}
-	.hori-selector .left:before{
-		left: -25px;
-		top: -25px;
-	}
-	.hori-selector .right:before{
-		bottom: -25px;
-		left: -25px;
-	}
-}
+    .my-swal-container
+    {
+      
+      align-items: center;
+      padding: 5px;
+      font-size: 10px;
+    }
+    .my-swal-input{
+     
+      width: 85%;
+      color:black;
+    }
+    .my_swal_title{
+      font-size: 20px;
+    }
+    .my-swal-button{
+      padding: 10px;
+    }
+    .my_icon{
+      font-size: 10px;
+    }
+    .my_swal_text{
+      font-size: 8px;
+    }
   </style>
         </head>
     <body style="overflow: hidden; color: #f8f9fa;">
@@ -244,205 +124,107 @@ i {
 
           
              <div id="navbar-wrapper">
-          
-                <nav class="navbar navbar-expand-custom navbar-mainbg">
-                  <a class="text-decoration-none" href="{% url 'zoneDetail' %}">
-                    <h5 class="p-2 text-left tcplBlue"> <img  class="imglogo" src="{% static 'images/logo1.png' %}" alt="image not found" style="width: 50px; height: 50px;"> TCPLGeo</h5>
-
-                    
-                  </a>
-                  <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <i class="fas fa-bars text-white"></i>
-                  </button>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid pt-2">
+                      <a href="{% url 'index' %}">
+                        <h5 style="color: #004aad; padding-left: 30px;"> 
+                          <img  class="imglogo" src="{% static 'images/logo1.png' %}" alt="image not found" style="width: 40px; height: 40px; border-radius: 180%; background-color: #dddddd; margin-top: -3%;">
+                          TCPLGeo
+                        </h5>
+                      </a>
                   
-                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                      <ul class="navbar-nav ms-auto">
-                          {% comment %} <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
-
-                          <div style='max-height: 350px;  overflow-y: scroll;'><select id="layerSelect">
-                            <option value="layer1">Layer 1</option>
-                            <option value="layer2">Layer 2</option>
-                            <option value="layer3">Layer 3</option>
-                        </select> {% endcomment %}
-              
-              </div> 
-                     
-                          {% comment %} <li class="nav-item" id="box">
-                            <a class="nav-link" id="button"><i class="far fa-clone"></i> Make Query 
-                                  <form action="" id="form">
-                                      <div id="filter-tag">
-                                          <table>
-                                              <tr>
-                                                  <td>
-                                                      <label for="layer" style="font-size: 12px; padding: 2px;  font-weight: bold;">Select Layer</label>
-                                                  </td>
-                                                  <td>
-                                                      <select class="form-control" id="layer" name="layer" style="font-size: 10px;">
-                                                          <option value="" >Select Layer</option>
-                                                      </select>
-                                                  </td>
-                                              </tr>
-                                              <tr>
-                                                  <td>
-                                                      <label for="attributes" style="font-size: 12px; padding: 2px; font-weight: bold;">Select Column</label>
-                                                  </td>
-                                                  <td>
-                                                      <select class="form-control" id="attributes" name="attributes" style="font-size: 10px;">
-                                                          <option value="">Select Attributes</option>
-                                                      </select>
-                                                  </td>
-                                              </tr>
-                                              <tr>
-                                                  <td>
-                                                      <label for="operator" style="font-size: 12px; padding: 2px; font-weight: bold;">Select_Operator</label>
-                                                  </td>
-                                                  <td>
-                                                      <select class="form-control" id="operator" name="operator" style="font-size: 10px;">
-                                                          <option value="">Select operator</option>
-                                                      </select>
-                                                  </td>
-                                              </tr>
-                                              <tr>
-                                                  <td>
-                                                      <label for="value" style="font-size: 12px; padding: 2px; font-weight: bold;">Enter Value</label>
-                                                  </td>
-                                                  <td>
-                                                      <select class="form-control" id="selectvalue" name="selectvalue" style="font-size: 10px;" >
-                                                          <option value="">select value</option>
-                                                      </select>
-                                                  </td>
-                                              </tr>
-                                              <tr>
-                                           
-                                                      <button class="btn btn-success" onclick="event.preventDefault();  loadMap()" style="font-size: 13px;">Load Query</button>
-                                            
-                                              </tr>
-                                              <tr>
-                                                
-                                                  <!-- <p>selected query</p> -->
-                                                  <p id="textval" style="font-size: 10px; color: black;"> </p>
-                                               
-                                              </tr>
-                                          </table>
-                                      </div>
-                                  </form>
-                           </a>
-                        </li> {% endcomment %}
-                          {% comment %} <li class="nav-item ">
-                              <a class="nav-link" href="javascript:void(0);"><i class="far fa-address-book"></i>Search By Coordinates</a>
-                          </li>
-                           {% endcomment %}
-                           
-                          
-                          {% comment %} <li class="nav-item active">
-                              <a href="{% url  %}" class="nav-link"><i class="d-none d-sm-inline"></i>Upload File</a>
-                          </li> {% endcomment %}
-                            {% comment %} <li class="nav-item">
-                                <a class="nav-link" id="saveBtn" class="nav-link" > <i class="fal fa-plus-circle"></i> Create Bookmark</a>
-                              
-                            </li> {% endcomment %}
-                            <!--Show username those login -->
-
-                           {% comment %} <li>
-                                <div class="text-danger">
-                                  <a href="{% url 'logout' %}" class="text-danger fw-bold p-1 px-2" style="border: 0; font-size: 15px; border-radius: 10px;" name="Logout" type="submit">
-                                    <i class="fas fa-sign-out-alt"></i>
-                                    <span class="d-none d-sm-inline">logout</span>
-                                  </a>
-                                </div>
-                              </li> {% endcomment %}
-                            </ul>
-                          </li>
-                          {% comment %} end {% endcomment %}
-                        .
-                        <div>
-                       
-                      <li class="nav-item dropdown me-5 pe-5" style="font-size: 15px;">
-                        <h3 class="nav-link profile-username fw-bold text-capitalize" style="font-size: 15px; color: #004aad;" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          {{ user.username }}
-                        </h3>
-              
-                        <ul class="dropdown-menu me-5" aria-labelledby="navbarDropdown" style="font-size: 13px; padding: 20px;">
-                          {% comment %} <li>
-                            <label for="" class="p-2">User-Email :</label>
-                            <p class=" px-2" style="color: #004aad;">{{ user.email }}</p>
-                          </li> {% endcomment %}
-                          <li>
-                          
-                          </li>
-                          <li>
-                            <hr class="dropdown-divider">
-                          </li>
-                              <!--PDF -->
-                          <li class="nav-item me-5">
-                            <button onclick="downloadPDF('{{ user.username }}', '{{ user.email }}')" id="generatePdfButton" class="text-light border-0" style="background:#004aad;">
-                              <i class="fas fa-download"> Export map as PDF</i>
-                          </li>
-                          <li>
-                            <hr class="dropdown-divider">
-                          </li>
-                                                       <!--Bookmark code -->
-                          <li>
-                            <button id="saveBtn" class="dropdown-item" style="font-size:12px; font-weight: bold; color:#004aad;" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Create Bookmark <i class="fal fa-plus-circle"></i>
-                            </button>
-                        </li>
+                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                  
+                      <div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-size: 15px;">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         
-                                     <!-- Show bookmark list--> 
-                          <table id="locationTable" style="overflow-y: auto;">
-                            <thead>
-                              <tr>
-                                <th>Name</th>
-                               
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <!-- Table rows will be dynamically added here -->
-                            </tbody>
-                          </table><hr>
-                          </li>
+                  
+                            <li class="nav-item dropdown position-static" style="font-size: 15px;">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="display: none;">
+                                  Select option
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="font-size: 14px; font-weight: bold;">
+                                  <li>
+                                    {% comment %} <a type="button" class="dropdown-item" href="{% url 'main' %}">Search Village, Gut_Number, Taluka</a> {% endcomment %}
+                                  </li>
+                                  <li>
+                                    {% comment %} <a type="button" class="dropdown-item" href="{% url 'coordinates' %}">Search Coordinates</a> {% endcomment %}
+                                  </li>
+                                  <li>
+                                    <hr class="dropdown-divider">
+                                  </li>
+                                  <li>
+                                    <a class="dropdown-item" href="#">
+                                      <form method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <input type="file" name="file">
+                                        <button type="submit" class="btn btn-outline-primary"><i class="fas fa-file-import"></i></button>
+                                      </form>
+                                    </a>
+                                  </li>
+                                  <li>
+                                    
+                                      {% comment %} <a class="dropdown-item" href="{% url 'export_kml' %}" class="btn btn-primary">Export KML</a> {% endcomment %}
+                                   
+                                  </li>
+                                </ul>
+                              </li>
+                                                      <!--Show username those login -->
+                                                <!--Show username those login -->
+                                                <li class="nav-item  me-5 pe-5" style="font-size: 15px;">
+                                                    <a href = "{% url 'user_details' %}" class="nav-link profile-username fw-bold text-capitalize" style="font-size: 15px; color: #004aad;" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Welcome
+                                                    <a href="{% url 'profile' %}">{{ user.username }}</a>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <button id="saveBtn" class="dropdown-item" style="font-size:12px; font-weight: bold; color:#004aad;" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Search By Coordinates
+                                                    </button>
+                                                
+                                                </li>
+                                                <li>
+                                                    <button id="saveBtn" class="dropdown-item" style="font-size:12px; font-weight: bold; color:#004aad;" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Make Query 
+                                                    </button>
+                                                
+                                                </li>
+                                                <!-- <li>
+                                                   
+                                                    <a href="{% url 'before_payment' %}">
+                                                      <button type="button" class="btn btn-outline-primary">Upload File<i class="fas fa-file-import"></i></button>
+                                                    </a>
+                                                
+                                                </li> -->
+                                                
 
-                          <li class="nav-item">
-                            <a class="nav-link" href="{% url 'user_details' %}" class="text-danger fw-bold p-1 px-2" style="border: 0; font-size: 15px; border-radius: 10px;" name="Logout" type="submit">
-                              <i class="fas fa-sign-out-alt"></i>
-                              <span class="text-success d-none d-sm-inline">user_Details</span>
-                          </a>
-                        </li>
-                      
-                        {% comment %} <li class="nav-item">
-                          <a class="nav-link" href="{% url 'before_payment' %}" class="text-danger fw-bold p-1 px-2" style="border: 0; font-size: 15px; border-radius: 10px;" name="Logout" type="submit">
-                            <i class="fas fa-sign-out-alt"></i>
-                            <span class=" text-success d-none d-sm-inline">Upload File <H1></H1></span>
-                        </a>
-                      </li> {% endcomment %}
-                    
-                        <li class="nav-item">
-                          <a class="nav-link" href="{% url 'logout' %}" class="text-danger fw-bold p-1 px-2" style="border: 0; font-size: 15px; border-radius: 10px;" name="Logout" type="submit">
-                            <i class="fas fa-sign-out-alt"></i>
-                            <span class="text-danger d-none d-sm-inline">logout</span>
-                        </a>
-                      </li>
+                                                           <!--Bookmark code -->
+                                                <li>
+                                                    <button id="saveBtn" class="dropdown-item" style="font-size:12px; font-weight: bold; color:#004aad;" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Create Bookmark <i class="fal fa-plus-circle"></i>
+                                                    </button>
+                                                
+                                                </li>
+                              
+                                        <li>
+                                            <div class="text-danger">
+                                            <a href="{% url 'logout' %}" class="text-danger fw-bold p-1 px-2" style="border: 0; font-size: 15px; border-radius: 10px;" name="Logout" type="submit">
+                                                <i class="fas fa-sign-out-alt"></i>
+                                                <span class="d-none d-sm-inline">logout</span>
+                                            </a>
+                                            </div>
+                                        </li>
+
+                        </ul>
+                      </div>
                     </div>
-                   
-                          {% comment %} <li class="nav-item">
-                              <a class="nav-link" href="{% url 'logout' %}" class="text-danger fw-bold p-1 px-2" style="border: 0; font-size: 15px; border-radius: 10px;" name="Logout" type="submit">
-                                <i class="fas fa-sign-out-alt"></i>
-                                <span class="d-none d-sm-inline">logout</span>
-                            </a>
-                          </li> {% endcomment %}
-
-                       
-                      </ul>
-
-                      
-                  </div>
-              </nav>
-
-             </div>
+                  </nav>
+                  
+    
             <section id="content-wrapper">
                 <div id="map" class="leaflet-container"></div>
-          
+    
                 <div id="main">
                    <div class="main_search">
                     
@@ -450,25 +232,62 @@ i {
                         <input type="text" placeholder="Search.." name="search2" class="search" id="search-input">
     
                         <button class="bg-light" id="btnData2" type="button" ><i class="far fa-search"></i></button>
-
-                       <button class="btn-success" id="btnData1" type="button" onclick="ClearMe()">Clear</button> 
+                    
     
-                        {% comment %} <button class="bg-light" id="btnData2" type="button" ><i class="far fa-search"></i></button> {% endcomment %}
+                        <button class="btn-success" id="btnData1" type="button" onclick="ClearMe()">Clear</button>
+    
+    <!-- 
+                        <button onclick="takeSc
+                        reenshot()" id="save-btn" class="text-light border-0 " style="background:#004aad;    "><i class="fas fa-download"></i></button>
+    
+                    </div>-->
     
                   </div>
-         </div>
+    
+                </div>
             </section>
-            
-          
-
-           
-             </div>
     
     
         </div>
-
-       
       </div>
+
+
+<!------------------------------------- new code ------------------------------------------->
+<!-- Leaflet Draw JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+
+<script>
+var drawnItems = new L.FeatureGroup();
+map.addLayer(drawnItems);
+
+var drawControl = new L.Control.Draw({
+  draw: {
+    polygon: {
+      shapeOptions: {
+        color: 'green', // Set the outline color of the drawn polygon
+        fillColor: 'green', // Set the fill color of the drawn polygon
+      },
+    },
+    polyline: false, // Disable drawing of polylines
+    circle: false, // Disable drawing of circles
+    marker: false, // Disable drawing of markers
+  },
+  edit: {
+    featureGroup: drawnItems,
+  },
+});
+map.addControl(drawControl);
+
+map.on('draw:created', function (e) {
+  var layer = e.layer;
+  drawnItems.addLayer(layer);
+});
+
+</script>
+
+<!------------------------------------- new end ------------------------------------------->
+<!--  -->
+
       
       <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
       <!--html2pdf--> 
@@ -481,8 +300,11 @@ i {
           var logoimage = "{% static 'images/logo1.png' %}"; // Replace with the actual URL of your image
           var imageUrl = "{% static 'images/legend1.png' %}"; // Replace with the actual URL of your image
         </script>
-                
+                    <!--html2canvas-->
+                    {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script> {% endcomment %}
+                    {% comment %} <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>     {% endcomment %}
                     <!-- jquery -->
+                    {% comment %} <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> {% endcomment %}
                     <script
                         src="https://code.jquery.com/jquery-3.7.0.min.js"
                         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
@@ -490,39 +312,15 @@ i {
                     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
                     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
                     
-                     <script>
-                      $(function() {
-                // Initialize autocomplete widget
+<script>
+$(function() {
+// Initialize autocomplete widget
 
-                $("#search-input").autocomplete({
-                source: "/autocomplete/",
-                });
-                });
-
-
-
-
-                
-
-                    </script>
-
-                </script> 
-                {% comment %} <script>
-                  $(function() {
-            // Initialize autocomplete widget
-
-            $("#search-input").autocomplete({
-            source: "/Search_cordinates/",
-            });
-            });
-
-
-
-
-            
-
-                </script> {% endcomment %}
-                
+$("#search-input").autocomplete({
+source: "/autocomplete/",
+});
+});
+</script>
                     
                     
                     
@@ -563,56 +361,6 @@ i {
                     var northImageUrl = "{% static 'images/North.png' %}";
                            </script>                 
           <script src="{% static 'js/map.js' %}"></script>
-
-
-
-
-          <script>
-// ---------Responsive-navbar-active-animation-----------
-function test(){
-	var tabsNewAnim = $('#navbarSupportedContent');
-	var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
-	var activeItemNewAnim = tabsNewAnim.find('.active');
-	var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
-	var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
-	var itemPosNewAnimTop = activeItemNewAnim.position();
-	var itemPosNewAnimLeft = activeItemNewAnim.position();
-	$(".hori-selector").css({
-		"top":itemPosNewAnimTop.top + "px", 
-		"left":itemPosNewAnimLeft.left + "px",
-		"height": activeWidthNewAnimHeight + "px",
-		"width": activeWidthNewAnimWidth + "px"
-	});
-	$("#navbarSupportedContent").on("click","li",function(e){
-		$('#navbarSupportedContent ul li').removeClass("active");
-		$(this).addClass('active');
-		var activeWidthNewAnimHeight = $(this).innerHeight();
-		var activeWidthNewAnimWidth = $(this).innerWidth();
-		var itemPosNewAnimTop = $(this).position();
-		var itemPosNewAnimLeft = $(this).position();
-		$(".hori-selector").css({
-			"top":itemPosNewAnimTop.top + "px", 
-			"left":itemPosNewAnimLeft.left + "px",
-			"height": activeWidthNewAnimHeight + "px",
-			"width": activeWidthNewAnimWidth + "px"
-		});
-	});
-}
-$(document).ready(function(){
-	setTimeout(function(){ test(); });
-});
-$(window).on('resize', function(){
-	setTimeout(function(){ test(); }, 500);
-});
-$(".navbar-toggler").click(function(){
-	$(".navbar-collapse").slideToggle(300);
-	setTimeout(function(){ test(); });
-});
-
-
-
-    
-          </script>
 
       
     </body>

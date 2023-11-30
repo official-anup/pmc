@@ -74,10 +74,10 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.postgresql',
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         
-        'NAME': 'tcplauth5',
+        'NAME': 'pmcdb',
         'USER': 'postgres', 
-        'PASSWORD': 'anup@12345',
-        'HOST': 'localhost',
+        'PASSWORD': 'Geo992101',
+        'HOST': 'pmcdb.c01x1jtcm1ms.ap-south-1.rds.amazonaws.com',
         'PORT': '5432',
     }
        

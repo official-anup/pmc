@@ -21,7 +21,7 @@
 </head>
 <body>
 
-    <h4 class="p-3 text-left tcplBlue"> <img src="{% static 'images/logo1.png' %}" alt="image not found" style="width: 50px; height: 50px;"> TCPLGeo</h4>
+    <h4 class="p-3 text-left tcplBlue"> <img src="{% static 'images/logo.png' %}" alt="image not found" style="width: 50px; height: 50px;">GeoPulse</h4>
     <a href="{% url 'logout' %}" class="text-danger text-decoration-none fw-bold p-1 px-2" style="border: 0; font-size: 20px; border-radius: 10px;    position: absolute;
     top: 10px; 
     right: 10px;" name="Logout" type="submit">
@@ -33,7 +33,7 @@
         <div class="row">
           
             <h4 class="d-flex justify-content-between "><span class="text-capitalize">Welcome  {{request.user}}</span>
-            <a type="button" href="{% url 'ward' %}"class="text-danger "><i class="fas fa-window-close"></i></a></h4></br></br></br>
+            <a type="button" href="{% url 'ward' %}"class="text-danger "><i class="fas fa-window-close"></i></a></h4></br></br></<br>
          <div class="col-sm-3 border-end " >
            
           <ul class="list-unstyled ">
@@ -47,7 +47,7 @@
        
           </ul>
          
-    </h5></br>
+    </h5><br>
          </div>
          <div class="col-sm-8 offset-sm-1 " >
        

@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCPL</title>
-
+    <title>GeoPulse</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo1.png' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Young+Serif&display=swap" rel="stylesheet">
@@ -23,55 +23,108 @@
      <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
      <style>
-
-        .container {
+        .container-fulid {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* This ensures the container takes up at least the height of the viewport. */
-           
+            min-height: 100vh;
+            background:#f7f7f5;
+            background-image: url("{% static 'images/khr.png' %}");
+            background-size: cover;
+          
         }
     
         .row {
+            padding-bottom:30px;
             width: 70%;
             text-align: center;
+            max-width: 100%; /* Ensure content does not overflow on small screens */
+            margin: 0 auto; /* Center the row horizontally */
         }
-
+    
         .form-group {
-            text-align: left; /* Adjust this as needed */
+            text-align: left;
+            padding-top:5px;
+            font-weight: bold;
+            color: #004aad;
         }
-        
+        .form-group input {
+            background-color:transparent;
+            border: none; 
+            border-bottom: 3px solid #000; 
+        }
+        .form-group input:hover{
+            background-color: transparent;
+        }
         .container .col-sm-12 .text-center img {
             display: block;
             margin: 0 auto; /* Center horizontally */
+            max-width: 100%; /* Ensure images do not exceed their container */
         }
-        .abc{
-            width: 70%;
-       
+        .abc {
+            width: 50%;
+            position: relative;
+            
+            background:transparent;
+            
+           
         }
-        h4{
+    
+        .abc::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.7); /* Adjust the alpha value for opacity */
+            z-index: -1;
+        }
+    
+        .abc:hover::before {
+            background-color: rgba(0, 0, 0, 0.4); /* Adjust the alpha value for hover opacity */
+        }
+    
+        form{
+            padding:30px;
+           
+        }
+    
+        h4 {
             font-family: 'Young Serif', serif;
-            background-color:lightblue;
-            color:#004aad;
+          
+            background-color:#92afa7;
+            
+            color:white;
             padding: 10px;
         }
     
-     </style>
- 
+        /* Responsive Media Queries */
+        @media (max-width: 768px) {
+            .row {
+                width: 90%; /* Adjust the width for small screens */
+            }
+    
+            .abc {
+                width: 100%; /* Expand to full width on small screens */
+            }
+        }
+    </style>
+    
 </head>
 <body style="overflow-y:hidden ;">
 
 
-    <div class="container">
+    <div class="container-fulid">
        
       <div class="row"  >
         
-         <div class="abc offset-sm-2">
+         <div class="abc offset-sm-3 ps-2">
      
                
-                <h4> <img   src="{% static 'images/logo1.png' %}" alt="image not found"  style="width: 50px; height: 50px;">LOGIN</h4>
+                <h4> LOGIN</h4>
           
-        <form action="" method="post" novalidate class="bg-light shadow p-5">
+        <form action="" method="post" novalidate class="">
         
        
             {% csrf_token %}

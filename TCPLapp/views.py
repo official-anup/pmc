@@ -34,11 +34,12 @@ from .forms import CustomerProfileForms,CustomerRegiForm, LoginForm, QueryForm
 
 
 from .models import *
-
+import openpyxl
 from django.core import serializers
 from owslib.wms import WebMapService
 # import matplotlib.pyplot as plt
-
+from .models import SearchHistory
+from django.utils import timezone
 from io import BytesIO
 import io
 from django.contrib.auth import authenticate
@@ -214,7 +215,7 @@ def user_details(request):
     add=Customer2.objects.filter(user=request.user) 
     # print(add,'aaaaaa')#This is to get the current user,it solve the problem like to store user in login as a session.
     
-    return render(request, 'TCPLapp/user_details.html',{"add":add,"active":"btn-primary"})
+    return render(request, 'TCPLapp/user_detailss.html',{"add":add,"active":"btn-primary"})
     
 
     
@@ -224,7 +225,9 @@ def changepassword(request):
     
     return render(request, 'TCPLapp/changepassword.html')
 
-
+# @login_required(login_url="login")
+def profilepage(request):
+    return render(request, 'TCPLapp/profile.html')
 
 ########################################################
 
@@ -415,30 +418,49 @@ class Queryform(View):
 
 # Save BookMarks_____________________________
 
-@csrf_exempt
-@login_required
-def save_location(request):
-    if request.method == 'POST':
-        latitude = request.POST.get('latitude')
-        longitude = request.POST.get('longitude')
+# @csrf_exempt
+# @login_required
+# def save_location(request):
+#     if request.method == 'POST':
+#         latitude = request.POST.get('latitude')
+#         longitude = request.POST.get('longitude')
+#         name = request.POST.get('name')
+#         username = request.POST.get('username')
+
+#         location = Location(user=request.user, name=name,
+#                             latitude=latitude, longitude=longitude)
+#         location.save()
+
+#         return JsonResponse({'message': 'Location saved successfully.'})
+#     else:
+#         return JsonResponse({'message': 'Invalid request method.'})
+
+
+# def get_locations(request):
+#     locations = Location.objects.filter(user=request.user)
+#     data = {
+#         'locations': list(locations.values('id','name', 'latitude', 'longitude'))
+#     }
+#     return JsonResponse(data)
+
+class SaveLocationView(View):
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        latitude = request.POST.get('lat')
+        longitude = request.POST.get('lng')
         name = request.POST.get('name')
-        username = request.POST.get('username')
 
-        location = Location(user=request.user, name=name,
-                            latitude=latitude, longitude=longitude)
-        location.save()
+        BookmarkedLocation.objects.create(user=user, latitude=latitude, longitude=longitude, name=name)
 
-        return JsonResponse({'message': 'Location saved successfully.'})
-    else:
-        return JsonResponse({'message': 'Invalid request method.'})
+        return JsonResponse({'status': 'success'})
 
-
+@login_required(login_url='login')
 def get_locations(request):
-    locations = Location.objects.filter(user=request.user)
-    data = {
-        'locations': list(locations.values('id','name', 'latitude', 'longitude'))
-    }
-    return JsonResponse(data)
+    user = request.user
+    locations = BookmarkedLocation.objects.filter(user=user).values('id', 'name', 'latitude', 'longitude')
+    return JsonResponse(list(locations), safe=False)
+
+
 
 #delete_location
 @csrf_exempt
@@ -540,8 +562,8 @@ def select_by_location(request):
         encoded_target_layer_name = quote(target_layer_name)
 
         # Define WFS URLs for source and target layers with properly encoded names
-        wfs_url_source = "http://localhost:8080/geoserver/zone/wfs?request=GetFeature&typeName={}&outputFormat=application/json".format(encoded_source_layer_name)
-        wfs_url_target = "http://localhost:8080/geoserver/zone/wfs?request=GetFeature&typeName={}&outputFormat=application/json".format(encoded_target_layer_name)
+        wfs_url_source = "https://portal.geopulsea.com/geoserver/PMC/wfs?request=GetFeature&typeName={}&outputFormat=application/json".format(encoded_source_layer_name)
+        wfs_url_target = "https://portal.geopulsea.com/geoserver/PMC/wfs?request=GetFeature&typeName={}&outputFormat=application/json".format(encoded_target_layer_name)
 
         gdf_source = gpd.read_file(wfs_url_source)
         gdf_target = gpd.read_file(wfs_url_target)
@@ -577,20 +599,28 @@ def ward(request):
     
     return render(request, 'TCPLapp/ward.html')
 
+def ward2(request):
+    return render(request, 'TCPLapp/ward2.html')
+
+
+
+def ward3(request):
+    
+    return render(request, 'TCPLapp/ward3.html')
 
 # WARD_VIEWS
 
 # @login_required(login_url="login")
 # def ward_table(request):
 # ############### for PMC_Missing_Link_Buffer ###########
-#     url1 = "http://localhost:8080/geoserver/zone/wfs"
-#     params = {
-#         "service": "WFS",
-#         "version": "2.0.0",
-#         "request": "GetFeature",
-#         "typeName": "zone:PMC_Missing_Links",
-#         "outputFormat": "application/json"
-#     }
+    # url1 = "http://localhost:8080/geoserver/zone/wfs"
+    # params = {
+    #     "service": "WFS",
+    #     "version": "2.0.0",
+    #     "request": "GetFeature",
+    #     "typeName": "zone:PMC_Missing_Links",
+    #     "outputFormat": "application/json"
+    # }
 
 #     response = requests.get(url1, params=params)
 
@@ -601,14 +631,14 @@ def ward(request):
         
         
 # ############### for PMC_Missing_Links ###########
-#     url2 = "http://localhost:8080/geoserver/zone/wfs"
-#     params = {
-#         "service": "WFS",
-#         "version": "2.0.0",
-#         "request": "GetFeature",
-#         "typeName": "zone:missinglink",
-#         "outputFormat": "application/json"
-#     }
+    # url2 = "http://localhost:8080/geoserver/zone/wfs"
+    # params = {
+    #     "service": "WFS",
+    #     "version": "2.0.0",
+    #     "request": "GetFeature",
+    #     "typeName": "zone:missinglink",
+    #     "outputFormat": "application/json"
+    # }
 
 #     response2 = requests.get(url2, params=params)
 
@@ -618,14 +648,14 @@ def ward(request):
 #         missinglink = [feature['properties'] for feature in data2]
         
 # ################### PMCroads  ################################
-#     url3 = "http://localhost:8080/geoserver/zone/wfs"
-#     params = {
-#         "service": "WFS",
-#         "version": "2.0.0",
-#         "request": "GetFeature",
-#         "typeName": "zone:PMCroads",
-#         "outputFormat": "application/json"
-#     }
+    # url3 = "http://localhost:8080/geoserver/zone/wfs"
+    # params = {
+    #     "service": "WFS",
+    #     "version": "2.0.0",
+    #     "request": "GetFeature",
+    #     "typeName": "zone:PMCroads",
+    #     "outputFormat": "application/json"
+    # }
 
 #     response3 = requests.get(url3, params=params)
 
@@ -636,14 +666,14 @@ def ward(request):
         
         
 # ################### DP_Roads  ################################
-#     url4 = "http://localhost:8080/geoserver/zone/wfs"
-#     params = {
-#         "service": "WFS",
-#         "version": "2.0.0",
-#         "request": "GetFeature",
-#         "typeName": "zone:DP_Roads",
-#         "outputFormat": "application/json"
-#     }
+    # url4 = "http://localhost:8080/geoserver/zone/wfs"
+    # params = {
+    #     "service": "WFS",
+    #     "version": "2.0.0",
+    #     "request": "GetFeature",
+    #     "typeName": "zone:DP_Roads",
+    #     "outputFormat": "application/json"
+    # }
 
 #     response4 = requests.get(url4, params=params)
 
@@ -654,3 +684,57 @@ def ward(request):
 # ###################################################
 #         return render(request, 'TCPLapp/ward.html', {'properties': PMC_Missing_Links,"missinglink":missinglink,"PMCroads":PMCroads,"DP_Roads":DP_Roads})
 #     # return render(request, 'TCPLapp/ward.html')
+
+
+from django.shortcuts import render
+import requests
+
+from django.shortcuts import render
+import requests
+
+def display_layers(request):
+    # GeoServer parameters
+    geoserver_url = 'http://localhost:8080/geoserver/'
+    username = 'admin'
+    password = 'geoserver'
+    workspace_name = 'zone'
+
+    # Get layers URL for the specified workspace
+    layers_url = f"{geoserver_url}workspaces/{workspace_name}/layers.json"
+
+    try:
+        # Use 'with' statement to automatically close the response
+        with requests.get(layers_url, auth=(username, password)) as response:
+            response.raise_for_status()  # Raise an error for bad responses
+
+            layers_data = response.json().get('layers', {}).get('layer', [])
+
+            if layers_data:
+                layer_names = [layer['name'] for layer in layers_data]
+                return render(
+                    request,
+                    'display_layers.html',
+                    {'geoserver_url': geoserver_url, 'workspace_name': workspace_name, 'layer_names': layer_names}
+                )
+            else:
+                return render(request, 'display_layers.html', {'error_message': 'No layers found.'})
+
+    except requests.exceptions.RequestException as e:
+        return render(request, 'display_layers.html', {'error_message': f"Failed to fetch layers. Error: {e}"})
+
+# ////////////////////////////////////////////////////
+
+def save_search_data(request):
+    if request.method == 'POST':
+        data = request.POST.get('query')
+        username = request.user.username
+
+        # Save search data to the database
+        SearchHistory.objects.create(user=request.user, query=data, timestamp=timezone.now())
+
+        return JsonResponse({'status': 'success'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+
+def search_history(request):
+    return render(request, 'search_history/search_history.html')
